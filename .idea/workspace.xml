@@ -388,6 +388,7 @@
       <change beforePath="$PROJECT_DIR$/../default.realm.management/access_control.control.mx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../default.realm.management/access_control.versions.mx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../default.realm.management/access_control.write.mx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../firebase.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../integration_test/app_test.dart" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../integration_test/auth_test_setup.dart" beforeDir="false" />
@@ -950,5 +951,16 @@
       <updated>1716510537106</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
