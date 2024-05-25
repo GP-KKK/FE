@@ -12,7 +12,9 @@ class App extends HookConsumerWidget{
   Widget build(BuildContext context, WidgetRef ref) {
 
     // TODO: implement build
-    return const HomeScreen();
+    return MaterialApp(
+      home: HomeScreen(),
+    );
   }
   
 }
