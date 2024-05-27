@@ -32,7 +32,6 @@ class UserModel with _$UserModel {
     required String name,
     dynamic source, //sns 정보 기반
     @JsonKey(name: 'profile_image', includeIfNull: false) String? profileImage,
-
     @JsonKey(includeIfNull: false) @Default(FeelState.unknown) FeelState feelState,
     @Default('')String feel,
     @JsonKey(name: 'emotion_degree',includeIfNull: false) @Default(EmotionDegree.unknown) EmotionDegree emotionDegree,
