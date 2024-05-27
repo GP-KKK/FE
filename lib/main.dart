@@ -35,7 +35,5 @@ Future<void> initializeApp() async {
       statusBarIconBrightness: Brightness.dark,
       statusBarColor: Colors.transparent,
     ),
-
   );
-
 }

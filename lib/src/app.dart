@@ -1,3 +1,5 @@
+import 'package:fe/src/presentation/screen/login/login_screen.dart';
+import 'package:fe/src/presentation/screen/news/news_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -13,7 +15,15 @@ class App extends HookConsumerWidget{
 
     // TODO: implement build
     return MaterialApp(
-      home: HomeScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => LoginScreen(),
+        //'/auth': (context) => Auth(),
+        '/home_screen': (context) => HomeScreen(),
+        '/news_list': (context) => NewsList(),
+        '/news_article': (context) => NewsArticle(),
+      },
+      //home: LoginScreen(),
     );
   }
   
