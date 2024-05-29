@@ -102,19 +102,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void mapOnTap() {
     setState(() {
-      Navigator.of(context).pushNamed('/news_list');
+      Navigator.of(context).pushNamed('/map');
     });
   }
 
   void chatOnTap() {
     setState(() {
-      Navigator.of(context).pushNamed('/news_list');
+      Navigator.of(context).pushNamed('/chat_list');
     });
   }
 
   void qrOnTap() {
     setState(() {
-      Navigator.of(context).pushNamed('/news_list');
+      Navigator.of(context).pushNamed('/qr_code');
     });
   }
 

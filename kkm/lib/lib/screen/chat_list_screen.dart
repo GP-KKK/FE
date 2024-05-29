@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class NewsListScreen extends StatefulWidget {
+class ChatListScreen extends StatefulWidget {
   @override
-  State<NewsListScreen> createState() => _NewsListState();
+  State<ChatListScreen> createState() => _ChatListState();
 }
 
-class _NewsListState extends State<NewsListScreen> {
+class _ChatListState extends State<ChatListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('뉴스 목록'),
+        title: Text('채팅 목록'),
         centerTitle: true,
         backgroundColor: Colors.blueAccent,
       ),
@@ -30,11 +30,11 @@ class _NewsListState extends State<NewsListScreen> {
               child: GestureDetector(
                 onTap: () {
                   setState(() {
-                    Navigator.of(context).pushNamed('/news_article');
+                    Navigator.of(context).pushNamed('/chat');
                   });
                 },
                 child: Text(
-                  'Item ${(index + 1)}', // 아이템 번호 표시
+                  'Chat ${(index + 1)}', // 아이템 번호 표시
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 18.0,

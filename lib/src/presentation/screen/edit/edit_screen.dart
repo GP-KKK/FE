@@ -33,7 +33,8 @@ class _SettingScreenState extends ConsumerState<EditScreen> {
     FeelState.parking: ('주차 중'),
     FeelState.commingsoon: ('곧 돌아옵니다.'),
     FeelState.busy: ('바쁨'),
-    FeelState.unknown : ('미상')
+    FeelState.unknown : ('알 수 없음'),
+    FeelState.hot: ('45.8도'),
   };
 
 
@@ -83,7 +84,7 @@ class _SettingScreenState extends ConsumerState<EditScreen> {
                       labelText: ('닉네임'),
                       hintText: ('닉네임을 작성하세요.'),
                       maxLength: 20,
-                      initialValue: '시작값',
+                      initialValue: '김성민',
                       onChanged: (value) => updateField(
                           currentUser, updatedUser, 'name', value),
                       // focusNode: _nameFocus,
@@ -91,10 +92,10 @@ class _SettingScreenState extends ConsumerState<EditScreen> {
                       //     .validateName(_nameFocus, value!),
                     ),
                     _buildTextField(// 내 상태
-                      labelText: ('내 상태'),
-                      hintText: ('상태를 입력하세요.'),
+                      labelText: ('내 상태메세지'),
+                      hintText: ('내 상태 메세지를 입력하세요.'),
                       maxLength: 20,
-                      initialValue: '시작값',
+                      initialValue: '바쁘다 바빠.',
                       onChanged: (value) => updateField(
                           currentUser, updatedUser, 'name', value),
                       // focusNode: _nameFocus,
@@ -103,9 +104,19 @@ class _SettingScreenState extends ConsumerState<EditScreen> {
                     ),
 
                     _buildPopupButton(
-                      textValue: feelNames[FeelState.unknown],
+                      labelText: ('내 상태'),
+
+                      textValue: feelNames[FeelState.busy],
                       onTap: () => _showSchoolBottomSheet(),
                     ),
+
+                    _buildPopupButton(
+                      labelText: ('내 온도'),
+
+                      textValue: feelNames[FeelState.hot],
+                      onTap: () => _showSchoolBottomSheet(),
+                    ),
+
                     // if (updatedUser.role == Role.child)
                     //   _buildSchoolAndGradeSection(currentUser, updatedUser),
                     // if (updatedUser.role == Role.child)

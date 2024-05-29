@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 
-class QrCodeScreen extends StatelessWidget {
+class QrCodeScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: QRScannerWireframe(),
-    );
-  }
+  State<QrCodeScreen> createState() => _QrCodeScreenState();
 }
 
-class QRScannerWireframe extends StatelessWidget {
+class _QrCodeScreenState extends State<QrCodeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('QR Code Scanner'),
+        centerTitle: true,
+        backgroundColor: Colors.blueAccent,
       ),
       body: Column(
         children: <Widget>[
@@ -36,7 +34,11 @@ class QRScannerWireframe extends StatelessWidget {
             flex: 1,
             child: Center(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    Navigator.of(context).pushNamed('/loading');
+                  });
+                },
                 child: Text('Take Photo'),
               ),
             ),

@@ -5,7 +5,9 @@ enum FeelState{
   parking,
   commingsoon,
   busy,
-  unknown
+  unknown,
+  //프로필 수정용 데이터
+  hot
 }
 
 enum EmotionDegree{

@@ -35,7 +35,7 @@ class BottomSubmitButton extends ConsumerWidget {
               onPressed: onPressed,
               buttonSize: ButtonSize.xl,
               buttonContent: Text(
-                buttonTitle ?? Intl.message('buttonSave'),
+                '저장하기',
                 style: textTheme.labelMedium!.copyWith(color: Colors.white),
               ),
             ),

@@ -18,7 +18,7 @@ class _SchoolBottomSheetState extends ConsumerState<SchoolBottomSheet> {
     FeelState.parking: ('주차 중'),
     FeelState.commingsoon: ('곧 돌아옵니다.'),
     FeelState.busy: ('바쁨'),
-    FeelState.unknown : ('미상')
+    FeelState.unknown : ('알 수 없음')
   };
 
   @override
