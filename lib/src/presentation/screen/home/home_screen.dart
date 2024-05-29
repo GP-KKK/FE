@@ -40,6 +40,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
         body: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
+
               systemOverlayStyle: const SystemUiOverlayStyle(
                 statusBarBrightness: Brightness.light,
                 statusBarIconBrightness: Brightness.dark,
@@ -182,7 +183,8 @@ class _ProfileButton extends StatelessWidget {
   final UserModel user;
 
   const _ProfileButton({
-    required this.user,
+    required this.user
+
   });
 
   @override
@@ -193,7 +195,7 @@ class _ProfileButton extends StatelessWidget {
 
     return ScaleCustomButton(
       onTap: () {
-        //context.push(Routes.myPage);
+        Navigator.pushNamed(context, '/edit');
       },
       child: Container(
         constraints: const BoxConstraints(minHeight: 72),

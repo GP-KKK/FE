@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:safe_car_system/constant/my_container.dart';
 
-import '../constant/my_container.dart';
-
-class LogIn extends StatefulWidget {
-  const LogIn({super.key});
+class LogInScreen extends StatefulWidget {
+  const LogInScreen({super.key});
 
   @override
-  State<LogIn> createState() => _LogInState();
+  State<LogInScreen> createState() => _LogInState();
 }
 
-class _LogInState extends State<LogIn> {
+class _LogInState extends State<LogInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

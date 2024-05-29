@@ -79,18 +79,18 @@ class _NewsListState extends State<NewsList> {
                                     '꽁꽁 얼어붙은 한강 위로 고양이가 걸어다닙니다.',
                                     maxLines: 3,
                                     overflow: TextOverflow.ellipsis,
-                                    style: textTheme.labelLarge!.copyWith(
+                                    style: textTheme.titleSmall!.copyWith(
                                       color: ColorTheme.slateColor,
                                     ),
                                   ),
                                   const SizedBox(height: 10),
                                   // if (currentQuest.currentScreen == null)
-                                  //   Text(
-                                  //     Intl.message('questCompletedExclamation'),
-                                  //     style: textTheme.labelSmall!.copyWith(
-                                  //       color: ColorTheme.primaryColor,
-                                  //     ),
-                                  //   ),
+                                    Text(
+                                      '2024/05/27',
+                                      style: textTheme.labelSmall!.copyWith(
+                                        color: ColorTheme.primaryColor,
+                                      ),
+                                    ),
                                   // if (currentQuest.currentScreen != null)
                                   // // currentScreen이 null이 아닐 경우
                                   //   _buildQuestProgressBarOrTimer(quests, currentQuest),
