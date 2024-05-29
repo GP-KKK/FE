@@ -156,7 +156,37 @@ flutter:
     - assets/images/profile/
     - assets/images/car.png
     - assets/images/report.png
-
+  fonts:
+    - family: nanumSquare
+      fonts:
+        - asset: assets/fonts/NanumSquareNeo-Regular.woff
+        - asset: assets/fonts/NanumSquareNeo-Regular.woff2
+          weight: 400
+        - asset: assets/fonts/NanumSquareNeo-Bold.woff
+        - asset: assets/fonts/NanumSquareNeo-Bold.woff2
+          weight: 700
+        - asset: assets/fonts/NanumSquareNeo-ExtraBold.woff
+        - asset: assets/fonts/NanumSquareNeo-ExtraBold.woff2
+          weight: 800
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Light.woff
+        - asset: assets/fonts/Roboto-Light.woff2
+          weight: 400
+        - asset: assets/fonts/Roboto-Regular.woff
+        - asset: assets/fonts/Roboto-Regular.woff2
+          weight: 700
+        - asset: assets/fonts/Roboto-Bold.woff
+        - asset: assets/fonts/Roboto-Bold.woff2
+          weight: 800
+    - family: SanFranciscoPro
+      fonts:
+        - asset: assets/fonts/SanFranciscoPro-Thin.woff2
+          weight: 400
+        - asset: assets/fonts/SanFranciscoPro-Regular.woff2
+          weight: 700
+        - asset: assets/fonts/SanFranciscoPro-Bold.woff2
+          weight: 800
 
 
   # To add assets to your application, add an assets section, like this:

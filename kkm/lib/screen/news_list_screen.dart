@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class NewsList extends StatefulWidget {
+class NewsListScreen extends StatefulWidget {
   @override
-  State<NewsList> createState() => _NewsListState();
+  State<NewsListScreen> createState() => _NewsListState();
 }
 
-class _NewsListState extends State<NewsList> {
+class _NewsListState extends State<NewsListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

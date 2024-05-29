@@ -9,15 +9,17 @@ class UserProfileIcon extends ConsumerWidget {
   final double? size;
   final Color? borderColor;
   final Color? backgroundColor;
+  //final Tier? tier;
   final double? tierIconSize;
 
   const UserProfileIcon(
       {super.key,
-        required this.profileImage,
-        this.size,
-        this.borderColor,
-        this.backgroundColor,
-        this.tierIconSize});
+      required this.profileImage,
+      this.size,
+      this.borderColor,
+      this.backgroundColor,
+      //this.tier,
+      this.tierIconSize});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,7 +30,6 @@ class UserProfileIcon extends ConsumerWidget {
       // 로컬 에셋 이미지 경로 설정
       imagePath = 'assets/images/profile/$profileImage.png';
     }
-    print(profileImage);
 
     return Stack(
       children: [
@@ -48,19 +49,40 @@ class UserProfileIcon extends ConsumerWidget {
             borderRadius: BorderRadius.circular((size ?? 40) / 2),
             child: isNetworkImage
                 ? Image.network(
-              imagePath,
-              fit: BoxFit.cover,
-              width: size ?? 40,
-              height: size ?? 40,
-            )
+                    imagePath,
+                    fit: BoxFit.cover,
+                    width: size ?? 40,
+                    height: size ?? 40,
+                  )
                 : Image.asset(
-              imagePath,
-              fit: BoxFit.cover,
-              width: size ?? 40,
-              height: size ?? 40,
-            ),
+                    imagePath,
+                    fit: BoxFit.cover,
+                    width: size ?? 40,
+                    height: size ?? 40,
+                  ),
           ),
         ),
+        // if (tier != null)
+        //   Positioned(
+        //     bottom: 0,
+        //     right: 0,
+        //     child: Container(
+        //       width: tierIconSize ?? 20,
+        //       height: tierIconSize ?? 20,
+        //       padding: const EdgeInsets.all(1.0),
+        //       decoration: ShapeDecoration(
+        //         color: ColorTheme.primaryColor[100],
+        //         shape: RoundedRectangleBorder(
+        //           borderRadius: BorderRadius.circular(100),
+        //         ),
+        //       ),
+        //       child: SvgPicture.asset(
+        //         'assets/images/tier/${tier!.name}.svg',
+        //         width: tierIconSize ?? 20,
+        //         height: tierIconSize ?? 20,
+        //       ),
+        //     ),
+        //   ),
       ],
     );
   }
