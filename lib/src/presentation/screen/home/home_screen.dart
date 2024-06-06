@@ -4,7 +4,6 @@ import 'package:fe/src/data/model/model.dart';
 import 'package:fe/src/presentation/common/scale_custom_button.dart';
 import 'package:fe/src/presentation/common/user_profile_icon.dart';
 import 'package:fe/src/shared/theme/color_theme.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -129,7 +128,8 @@ class _ProfileButton extends StatelessWidget {
   final UserModel user;
 
   const _ProfileButton({
-    required this.user,
+    required this.user
+
   });
 
   @override
@@ -140,7 +140,7 @@ class _ProfileButton extends StatelessWidget {
 
     return ScaleCustomButton(
       onTap: () {
-        //context.push(Routes.myPage);
+        Navigator.pushNamed(context, '/edit');
       },
       child: Container(
         constraints: const BoxConstraints(minHeight: 72),
@@ -204,10 +204,27 @@ class MenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: ShapeDecoration(
+        color: Colors.white.withOpacity(0.3),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+      ),
       child: ElevatedButton(
         onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          minimumSize: Size(100, 170),
+          // 버튼의 최소 크기 설정
+          padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
+          // 버튼의 내부 패딩 설정
+          textStyle: TextStyle(fontSize: 20),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15), // 버튼의 모서리 둥글기 조정
+          ),
+// 텍스트 크기 설정
+        ),
         child: Text(title),
       ),
     );
