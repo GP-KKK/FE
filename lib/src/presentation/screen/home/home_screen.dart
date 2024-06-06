@@ -10,9 +10,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-
 UserModel dummy_user = UserModel(
-    email: '123kim003@gmail.com', name: '김성민', feel: "건들지마소", profileImage: 'cat');
+    email: '123kim003@gmail.com',
+    name: '김성민',
+    feel: "건들지마소",
+    profileImage: 'cat');
+
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({
     super.key,
@@ -34,55 +37,53 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
-      SliverAppBar(
-      systemOverlayStyle: const SystemUiOverlayStyle(
-        statusBarBrightness: Brightness.light,
-        statusBarIconBrightness: Brightness.dark,
-        statusBarColor: Colors.transparent,
-      ),
-      leading: Container(),
-      backgroundColor: Colors.transparent,
-      elevation: 0.0,
-      scrolledUnderElevation: 0.0,
-      toolbarHeight: 0,
-      titleSpacing: 0,
-      floating: true,
-      pinned: true,
-      flexibleSpace: flexibleSpace,
-      bottom: bottom(dummy_user),
-    ),
-    SliverList(
-      delegate: SliverChildListDelegate(
-        [
-          MenuButton(
-            title: '뉴스보기',
-            onPressed: () {
-              // 뉴스보기 페이지로 이동
-            },
+          SliverAppBar(
+            systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarBrightness: Brightness.light,
+              statusBarIconBrightness: Brightness.dark,
+              statusBarColor: Colors.transparent,
+            ),
+            leading: Container(),
+            backgroundColor: Colors.transparent,
+            elevation: 0.0,
+            scrolledUnderElevation: 0.0,
+            toolbarHeight: 0,
+            titleSpacing: 0,
+            floating: true,
+            pinned: true,
+            flexibleSpace: flexibleSpace,
+            bottom: bottom(dummy_user),
           ),
-          MenuButton(
-            title: '지도',
-            onPressed: () {
-              // 지도 페이지로 이동
-            },
-          ),
-          MenuButton(
-            title: 'QR 찍기',
-            onPressed: () {
-              // QR 찍기 페이지로 이동
-            },
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                MenuButton(
+                  title: '뉴스보기',
+                  onPressed: () {
+                    // 뉴스보기 페이지로 이동
+                  },
+                ),
+                MenuButton(
+                  title: '지도',
+                  onPressed: () {
+                    // 지도 페이지로 이동
+                  },
+                ),
+                MenuButton(
+                  title: 'QR 찍기',
+                  onPressed: () {
+                    // QR 찍기 페이지로 이동
+                  },
+                ),
+              ],
+            ),
           ),
         ],
       ),
-    )
-    ,
-    ]
-    ,
-    )
-    ,
     );
   }
 }
+
 FlexibleSpaceBar get flexibleSpace {
   return FlexibleSpaceBar(
     background: Container(
@@ -98,39 +99,7 @@ FlexibleSpaceBar get flexibleSpace {
   );
 }
 
-class UserInfo extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue, // 배경 색상 설정
-      padding: EdgeInsets.all(16.0),
-      alignment: Alignment.bottomLeft,
-      child: const Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            '김경민',
-            style: TextStyle(
-              fontSize: 24,
-              color: Colors.white,
-            ),
-          ),
-          Text(
-            '바보',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.white,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-PreferredSizeWidget bottom(
-    UserModel user) {
+PreferredSizeWidget bottom(UserModel user) {
   return PreferredSize(
     preferredSize: const Size.fromHeight(72.0),
     child: Container(
@@ -138,12 +107,12 @@ PreferredSizeWidget bottom(
       decoration: Platform.isIOS
           ? null
           : const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment(-0.00, -1.00),
-          end: Alignment(0, 1),
-          colors: [Color(0xFFF1E9FF), Color(0x00F1E9FF)],
-        ),
-      ),
+              gradient: LinearGradient(
+                begin: Alignment(-0.00, -1.00),
+                end: Alignment(0, 1),
+                colors: [Color(0xFFF1E9FF), Color(0x00F1E9FF)],
+              ),
+            ),
       child: Row(
         children: [
           if (user != null)
@@ -155,7 +124,6 @@ PreferredSizeWidget bottom(
     ),
   );
 }
-
 
 class _ProfileButton extends StatelessWidget {
   final UserModel user;
@@ -227,14 +195,6 @@ class _ProfileButton extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
 
 class MenuButton extends StatelessWidget {
   final String title;
