@@ -33,75 +33,51 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   }
 
   Widget _buildHomeScreen() {
-    return Container(
-      decoration: const BoxDecoration(gradient: ColorTheme.primaryGradient),
-      child: Scaffold(
-
-        body: CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBar(
-
-              systemOverlayStyle: const SystemUiOverlayStyle(
-                statusBarBrightness: Brightness.light,
-                statusBarIconBrightness: Brightness.dark,
-                statusBarColor: Colors.transparent,
-              ),
-              leading: Container(),
-              backgroundColor: Colors.transparent,
-              elevation: 0.0,
-              scrolledUnderElevation: 0.0,
-              toolbarHeight: 0,
-              titleSpacing: 0,
-              floating: true,
-              pinned: true,
-              flexibleSpace: flexibleSpace,
-              bottom: bottom(dummy_user),
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarBrightness: Brightness.light,
+              statusBarIconBrightness: Brightness.dark,
+              statusBarColor: Colors.transparent,
             ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  MenuButton(
-                    title: '뉴스보기',
-                    onPressed: () {
-                      // 뉴스보기 페이지로 이동
-                      setState(() {
-                        Navigator.of(context).pushNamed('/news_list');
-                      });
-
-                    },
-                  ),
-                  MenuButton(
-                    title: '지도',
-                    onPressed: () {
-                      // 지도 페이지로 이동
-                    },
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                        child: MenuButton(
-                          title: 'QR 찍기',
-                          onPressed: () {
-                            // QR 찍기 페이지로 이동
-                          },
-                        ),
-                      ),
-                      Expanded(
-                        child: MenuButton(
-                          title: '채팅',
-                          onPressed: () {
-                            // QR 찍기 페이지로 이동
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
+            leading: Container(),
+            backgroundColor: Colors.transparent,
+            elevation: 0.0,
+            scrolledUnderElevation: 0.0,
+            toolbarHeight: 0,
+            titleSpacing: 0,
+            floating: true,
+            pinned: true,
+            flexibleSpace: flexibleSpace,
+            bottom: bottom(dummy_user),
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                MenuButton(
+                  title: '뉴스보기',
+                  onPressed: () {
+                    // 뉴스보기 페이지로 이동
+                  },
+                ),
+                MenuButton(
+                  title: '지도',
+                  onPressed: () {
+                    // 지도 페이지로 이동
+                  },
+                ),
+                MenuButton(
+                  title: 'QR 찍기',
+                  onPressed: () {
+                    // QR 찍기 페이지로 이동
+                  },
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -120,37 +96,6 @@ FlexibleSpaceBar get flexibleSpace {
       height: 0,
     ),
   );
-}
-
-class UserInfo extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue, // 배경 색상 설정
-      padding: EdgeInsets.all(16.0),
-      alignment: Alignment.bottomLeft,
-      child: const Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            '김경민',
-            style: TextStyle(
-              fontSize: 24,
-              color: Colors.white,
-            ),
-          ),
-          Text(
-            '바보',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.white,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
 
 PreferredSizeWidget bottom(UserModel user) {
