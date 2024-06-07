@@ -49,7 +49,7 @@ class ProfileImageBottomSheet extends ConsumerWidget {
         ),
       ),
       child: ProfileIconSet(
-        profileImage: 'cat',
+        profileImage: 'pig',
         onPressedIcon: (String? image) {
           // ref.watch(authControllerProvider.notifier).setProfile(
           //     user: currentUser,

@@ -24,7 +24,9 @@ class App extends HookConsumerWidget{
 
     // TODO: implement build
     return MaterialApp(
-      theme: mainThemeByLocale(const Locale('ko')),
+        debugShowCheckedModeBanner: false,
+
+        theme: mainThemeByLocale(const Locale('ko')),
       initialRoute: '/',
       routes: {
         '/': (context) => const LoginScreen(),

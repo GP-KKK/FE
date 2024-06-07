@@ -1,4 +1,6 @@
 import 'package:fe/src/presentation/layout/chat_layout.dart';
+import 'package:fe/src/shared/theme/color_theme.dart';
+import 'package:fe/src/shared/theme/text_theme.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -13,9 +15,15 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chat Screen'),
+        title: Text(
+          '채팅창',
+          style: textTheme.titleSmall!.copyWith(
+            color: ColorTheme.slateColor,
+          ),
+        ),
         centerTitle: true,
-        backgroundColor: Colors.blueAccent,
+        foregroundColor: Colors.blueGrey,
+        backgroundColor: Colors.white,
         leading: BackButton(
           onPressed: () {
             setState(() {

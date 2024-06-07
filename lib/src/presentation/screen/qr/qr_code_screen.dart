@@ -1,9 +1,12 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:fe/src/shared/theme/color_theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+
+import 'package:fe/src/shared/theme/text_theme.dart';
 
 class QrCodeScreen extends StatefulWidget {
   @override
@@ -15,9 +18,15 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('QR Code Scanner'),
+        title: Text(
+          'QR Code Scanner',
+          style: textTheme.titleSmall!.copyWith(
+            color: ColorTheme.slateColor,
+          ),
+        ),
         centerTitle: true,
-        backgroundColor: Colors.blueAccent,
+        foregroundColor: Colors.blueGrey,
+        backgroundColor: Colors.white,
       ),
       body: Column(
         children: <Widget>[
@@ -30,19 +39,19 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
               child: QRViewExample(),
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    Navigator.of(context).pushNamed('/loading');
-                  });
-                },
-                child: Text('Take Photo'),
-              ),
-            ),
-          ),
+          // Expanded(
+          //   flex: 1,
+          //   child: Center(
+          //     child: ElevatedButton(
+          //       onPressed: () {
+          //         setState(() {
+          //           Navigator.of(context).pushNamed('/loading');
+          //         });
+          //       },
+          //       child: Text('Take Photo'),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
@@ -85,11 +94,11 @@ class _QRViewExampleState extends State<QRViewExample> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  if (result != null)
-                    Text(
-                        'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
-                  else
-                    const Text('Scan a code'),
+                  // if (result != null)
+                  //   Text(
+                  //       'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
+                  // else
+                  //   const Text('Scan a code'),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -97,6 +106,16 @@ class _QRViewExampleState extends State<QRViewExample> {
                       Container(
                         margin: const EdgeInsets.all(8),
                         child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 32.0, vertical: 16.0),
+                              // 버튼의 내부 패딩 설정
+                              textStyle: TextStyle(fontSize: 20),
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(15), // 버튼의 모서리 둥글기 조정
+                              ),
+                            ),
                             onPressed: () async {
                               await controller?.toggleFlash();
                               setState(() {});
@@ -104,13 +123,29 @@ class _QRViewExampleState extends State<QRViewExample> {
                             child: FutureBuilder(
                               future: controller?.getFlashStatus(),
                               builder: (context, snapshot) {
-                                return Text('Flash: ${snapshot.data}');
+                                return Text(
+                                  '플래시: ${snapshot.data == true ? '켜짐' : '꺼짐'}',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: textTheme.bodyMedium!.copyWith(
+                                    color: ColorTheme.primaryColor,
+                                  ),
+                                );
                               },
                             )),
                       ),
                       Container(
                         margin: const EdgeInsets.all(8),
                         child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 32.0, vertical: 16.0),
+                              // 버튼의 내부 패딩 설정
+                              textStyle: TextStyle(fontSize: 20),
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(15), // 버튼의 모서리 둥글기 조정
+                              ),
+                            ),
                             onPressed: () async {
                               await controller?.flipCamera();
                               setState(() {});
@@ -120,38 +155,17 @@ class _QRViewExampleState extends State<QRViewExample> {
                               builder: (context, snapshot) {
                                 if (snapshot.data != null) {
                                   return Text(
-                                      'Camera facing ${describeEnum(snapshot.data!)}');
+                                    '카메라 전환',
+                                    overflow: TextOverflow.ellipsis,
+                                    style: textTheme.bodyMedium!.copyWith(
+                                      color: ColorTheme.primaryColor,
+                                    ),
+                                  );
                                 } else {
                                   return const Text('loading');
                                 }
                               },
                             )),
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            await controller?.pauseCamera();
-                          },
-                          child: const Text('pause',
-                              style: TextStyle(fontSize: 20)),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            await controller?.resumeCamera();
-                          },
-                          child: const Text('resume',
-                              style: TextStyle(fontSize: 20)),
-                        ),
                       )
                     ],
                   ),
@@ -167,7 +181,7 @@ class _QRViewExampleState extends State<QRViewExample> {
   Widget _buildQrView(BuildContext context) {
     // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
     var scanArea = (MediaQuery.of(context).size.width < 400 ||
-        MediaQuery.of(context).size.height < 400)
+            MediaQuery.of(context).size.height < 400)
         ? 150.0
         : 300.0;
     // To ensure the Scanner view is properly sizes after rotation
@@ -193,6 +207,8 @@ class _QRViewExampleState extends State<QRViewExample> {
       setState(() {
         result = scanData;
       });
+      //
+       Navigator.of(context).pushNamed('/loading');
     });
   }
 

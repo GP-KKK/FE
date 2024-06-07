@@ -41,9 +41,9 @@ class _SettingScreenState extends ConsumerState<EditScreen> {
 
   UserModel currentUser = UserModel(
       email: '123kim003@gmail.com',
-      name: '김성민',
+      name: '빵빵이',
       feel: "건들지마소",
-      profileImage: 'cat');
+      profileImage: 'pig');
   UserModel updatedUser = UserModel(
       email: 'newEmail@gmail.com',
       name: 'kimsm',
@@ -84,7 +84,7 @@ class _SettingScreenState extends ConsumerState<EditScreen> {
                       labelText: ('닉네임'),
                       hintText: ('닉네임을 작성하세요.'),
                       maxLength: 20,
-                      initialValue: '김성민',
+                      initialValue: '빵빵이',
                       onChanged: (value) => updateField(
                           currentUser, updatedUser, 'name', value),
                       // focusNode: _nameFocus,
@@ -95,7 +95,7 @@ class _SettingScreenState extends ConsumerState<EditScreen> {
                       labelText: ('내 상태메세지'),
                       hintText: ('내 상태 메세지를 입력하세요.'),
                       maxLength: 20,
-                      initialValue: '바쁘다 바빠.',
+                      initialValue: '옥지얌. 운전할 때 말 걸지마',
                       onChanged: (value) => updateField(
                           currentUser, updatedUser, 'name', value),
                       // focusNode: _nameFocus,

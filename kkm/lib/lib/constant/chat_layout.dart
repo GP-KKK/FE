@@ -62,7 +62,6 @@ class _ChatLayoutState extends State<ChatLayout> {
           Container(
             width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.all(8.0),
-            color: Colors.grey[200],
             child: Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: 30,

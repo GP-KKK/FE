@@ -15,9 +15,9 @@ import 'widget/menu_button_screen.dart';
 
 UserModel dummy_user = UserModel(
     email: '123kim003@gmail.com',
-    name: '김성민',
-    feel: "건들지마소",
-    profileImage: 'cat');
+    name: '빵빵이',
+    feel: "옥지얌. 운전할 때 말 걸지마",
+    profileImage: 'pig');
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({
