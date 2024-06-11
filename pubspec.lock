@@ -1460,6 +1460,46 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+  qr_code_scanner:
+    dependency: "direct main"
+    description:
+      name: qr_code_scanner
+      sha256: f23b68d893505a424f0bd2e324ebea71ed88465d572d26bb8d2e78a4749591fd
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
+  realm:
+    dependency: "direct main"
+    description:
+      name: realm
+      sha256: a53b6903e2f6603c906bf5aac3691f0b2f45262aa08525a4bd546900602f2f17
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.9.0"
+  realm_common:
+    dependency: transitive
+    description:
+      name: realm_common
+      sha256: "29516a9e43a9e75b2e16226ce24ccd9a549d9377e69be218394d8fb84da11183"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.9.0"
+  realm_dart:
+    dependency: transitive
+    description:
+      name: realm_dart
+      sha256: "55cf02d26b0775e79570cf0ba6e4036a10c66250b99cb8f1ee41d71057206a7f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.9.0"
+  realm_generator:
+    dependency: transitive
+    description:
+      name: realm_generator
+      sha256: "6d26ca214aad1b49f37a1a86f3216f19a25657d38d82cefb16551a35aa316ec1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.9.0"
   retrofit:
     dependency: "direct main"
     description:

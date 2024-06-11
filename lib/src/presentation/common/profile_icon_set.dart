@@ -107,7 +107,7 @@ class _ProfileIconButtonState extends State<ProfileIconButton> {
 
     return GestureDetector(
       onTap: () => widget
-          .onPressedIcon(isNetworkImage ? tempNetworkImageUrl : imagePath),
+          .onPressedIcon(imagePath),
       child: Container(
         width: 54,
         height: 54,

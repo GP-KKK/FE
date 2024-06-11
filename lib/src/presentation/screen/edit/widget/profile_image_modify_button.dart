@@ -14,7 +14,7 @@ class ProfileImageModifyButton extends ConsumerWidget {
     //final account = ref.watch(authControllerProvider);
 
     // if (account is Authenticated) {
-      String imagePath = 'cat';
+      String imagePath = 'assets/images/profile/pig.png';
       //bool isNetworkImage = imagePath.startsWith('http');
 
       // if (!isNetworkImage) {
