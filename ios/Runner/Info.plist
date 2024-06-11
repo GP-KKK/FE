@@ -11,10 +11,10 @@
         <string>fbUrlSchemes</string>
 
         <!-- google login -->
-        <string>google url schemes</string>
+        <string>com.googleusercontent.apps.289836055589-amoihhqkbt9m8tr1apl98s3rsbdbp7h0</string>
 
         <!-- kakao login -->
-        <string>kakao네이티브 앱 키</string>
+        <string>kakao5023f50da56c724b08f5d91b6ee9ba61</string>
 
         <!-- naver login -->
         <string>socialloginapp</string>

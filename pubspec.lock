@@ -73,6 +73,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.5.0"
+  asn1lib:
+    dependency: transitive
+    description:
+      name: asn1lib
+      sha256: "58082b3f0dca697204dbab0ef9ff208bfaea7767ea771076af9a343488428dda"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.5.3"
   async:
     dependency: transitive
     description:
@@ -361,6 +369,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.4.3+1"
+  encrypt:
+    dependency: transitive
+    description:
+      name: encrypt
+      sha256: "62d9aa4670cc2a8798bab89b39fc71b6dfbacf615de6cf5001fb39f7e4a996a2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.3"
   equatable:
     dependency: transitive
     description:
@@ -992,7 +1008,7 @@ packages:
     source: hosted
     version: "0.15.4"
   http:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: http
       sha256: "761a297c042deedc1ffbb156d6e2af13886bb305c2a343a4d972504cd67dd938"
@@ -1196,6 +1212,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.8.0"
+  kakao_flutter_sdk_auth:
+    dependency: transitive
+    description:
+      name: kakao_flutter_sdk_auth
+      sha256: "43b81bb90d0e01516d321ab3cedc32303f661f115c564489c0fcc4e4a065c777"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.9.2"
+  kakao_flutter_sdk_common:
+    dependency: transitive
+    description:
+      name: kakao_flutter_sdk_common
+      sha256: "0e3ffd97fa35386d6fabe854cb4c5799b303c75b25f15ce4ec10163d87a5caa5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.9.2"
+  kakao_flutter_sdk_user:
+    dependency: "direct main"
+    description:
+      name: kakao_flutter_sdk_user
+      sha256: "9d3bd35d5b31cf01d45c7d114ca0c589d5098d8e6efce6f13d574ea692ba6a62"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.9.2"
   leak_tracker:
     dependency: transitive
     description:
@@ -1420,6 +1460,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  pointycastle:
+    dependency: transitive
+    description:
+      name: pointycastle
+      sha256: "4be0097fcf3fd3e8449e53730c631200ebc7b88016acecab2b0da2f0149222fe"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.9.1"
   pool:
     dependency: transitive
     description:
@@ -1476,38 +1524,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
-  realm:
-    dependency: "direct main"
-    description:
-      name: realm
-      sha256: a53b6903e2f6603c906bf5aac3691f0b2f45262aa08525a4bd546900602f2f17
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.9.0"
-  realm_common:
-    dependency: transitive
-    description:
-      name: realm_common
-      sha256: "29516a9e43a9e75b2e16226ce24ccd9a549d9377e69be218394d8fb84da11183"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.9.0"
-  realm_dart:
-    dependency: transitive
-    description:
-      name: realm_dart
-      sha256: "55cf02d26b0775e79570cf0ba6e4036a10c66250b99cb8f1ee41d71057206a7f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.9.0"
-  realm_generator:
-    dependency: transitive
-    description:
-      name: realm_generator
-      sha256: "6d26ca214aad1b49f37a1a86f3216f19a25657d38d82cefb16551a35aa316ec1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.9.0"
   retrofit:
     dependency: "direct main"
     description:
