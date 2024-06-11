@@ -2,11 +2,20 @@ import 'dart:io';
 
 import 'package:device_region/device_region.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:guardiann_flutter/src/data/repository/repository.dart';
 // import 'package:guardiann_flutter/src/presentation/controller/controller.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
+
+enum LoginPlatform {
+  facebook,
+  google,
+  kakao,
+  naver,
+  apple,
+  none, // logout
+}
 
 class SocialLoginButtonSet extends StatefulHookConsumerWidget {
   const SocialLoginButtonSet({super.key});
@@ -62,6 +71,7 @@ class _SocialLoginButtonSetState extends ConsumerState<SocialLoginButtonSet> {
                     key: const Key('google_login_button'),
                     onTap: () async {
                       print('google login');
+
                       setState(() {
                         Navigator.of(context).pushNamed('/home_screen');
                       });
@@ -103,6 +113,13 @@ class _SocialLoginButtonSetState extends ConsumerState<SocialLoginButtonSet> {
                   if (region == 'KR' || region == 'kr')
                     GestureDetector(
                       onTap: () async {
+                        final NaverLoginResult result = await FlutterNaverLogin.logIn();
+                        if (result.status == NaverLoginStatus.loggedIn) {
+                          print('accessToken = ${result.accessToken}');
+                          print('id = ${result.account.id}');
+                          print('email = ${result.account.email}');
+                          print('name = ${result.account.name}');
+                        }
                         setState(() {
                           Navigator.of(context).pushNamed('/home_screen');
                         });
