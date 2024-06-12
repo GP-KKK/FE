@@ -84,7 +84,7 @@ class _SocialLoginButtonSetState extends ConsumerState<SocialLoginButtonSet> {
   }
 
   // sing in with apple
-  void signInWithApple() async {
+  void signInWithApples() async {
     final credential = await SignInWithApple.getAppleIDCredential(
       scopes: [
         AppleIDAuthorizationScopes.email,
@@ -197,7 +197,7 @@ class _SocialLoginButtonSetState extends ConsumerState<SocialLoginButtonSet> {
                   if (Platform.isIOS)
                     GestureDetector(
                       onTap: () async {
-                        SignInWithApple();
+                        signInWithApples();
                         //await authController.login(type: LoginType.apple);
                       },
                       child: SvgPicture.asset(
