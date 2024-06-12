@@ -1,3 +1,4 @@
+import 'package:fe/src/presentation/controller/controller.dart';
 import 'package:fe/src/presentation/layout/static_layout.dart';
 import 'package:fe/src/presentation/screen/login/widget/social_login_button.dart';
 import 'package:flutter/material.dart';
@@ -18,12 +19,12 @@ class LoginScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // ref.listen<AuthState>(authControllerProvider, (_, state) {
-    //   switch (state) {
-    //     case Authenticated():
-    //       context.go(path ?? Routes.onBoarding);
-    //   }
-    // });
+    ref.listen<AuthState>(authControllerProvider, (_, state) {
+      switch (state) {
+        case Authenticated():
+          Navigator.of(context).pushNamed('/home_screen');
+      }
+    });
 
     return StaticLayout(
       key: const Key('login_screen'),
