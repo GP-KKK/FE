@@ -46,6 +46,7 @@ const _$FeelStateEnumMap = {
   FeelState.commingsoon: 'commingsoon',
   FeelState.busy: 'busy',
   FeelState.unknown: 'unknown',
+  FeelState.hot: 'hot',
 };
 
 const _$EmotionDegreeEnumMap = {
