@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:device_region/device_region.dart';
+import 'package:fe/src/presentation/controller/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -83,7 +84,7 @@ class _SocialLoginButtonSetState extends ConsumerState<SocialLoginButtonSet> {
   }
 
   // sing in with apple
-  void signInWithApple() async {
+  void signInWithApples() async {
     final credential = await SignInWithApple.getAppleIDCredential(
       scopes: [
         AppleIDAuthorizationScopes.email,
@@ -159,7 +160,7 @@ class _SocialLoginButtonSetState extends ConsumerState<SocialLoginButtonSet> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    //final authController = ref.read(authControllerProvider.notifier);
+    final authController = ref.read(authControllerProvider.notifier);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 100.0),
@@ -196,7 +197,7 @@ class _SocialLoginButtonSetState extends ConsumerState<SocialLoginButtonSet> {
                   if (Platform.isIOS)
                     GestureDetector(
                       onTap: () async {
-                        SignInWithApple();
+                        signInWithApples();
                         //await authController.login(type: LoginType.apple);
                       },
                       child: SvgPicture.asset(
@@ -222,8 +223,11 @@ class _SocialLoginButtonSetState extends ConsumerState<SocialLoginButtonSet> {
                   if (region == 'KR' || region == 'kr')
                     GestureDetector(
                       onTap: () async {
-                        signInWithNaver();
-                        //await authController.login(type: LoginType.naver);
+
+                        //signInWithNaver();
+                        await authController.login(type: 'naver');
+                        Navigator.of(context).pushNamed('/home_screen');
+
                       },
                       child: SvgPicture.asset(
                         'assets/images/svg/btn_login_naver.svg',
