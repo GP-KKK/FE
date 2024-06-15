@@ -8,7 +8,7 @@ abstract class AuthService {
   @GET('/user')
   Future<UserModel?> getUser(String email);
 
-  @PATCH('/user')
+  @PATCH('/modify')
   Future<void> updateUser(@Body() Map<String, dynamic> userData);
 
   @DELETE('/user')

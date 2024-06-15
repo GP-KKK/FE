@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:fe/src/data/model/model.dart';
 import 'package:fe/src/presentation/common/adaptive_bottom_sheet.dart';
 import 'package:fe/src/presentation/common/bottom_submit_button.dart';
@@ -5,6 +7,7 @@ import 'package:fe/src/presentation/common/custom_popup_button.dart';
 import 'package:fe/src/presentation/common/custom_text_field.dart';
 import 'package:fe/src/presentation/controller/controller.dart';
 import 'package:fe/src/presentation/layout/scollable_layout.dart';
+import 'package:fe/src/presentation/screen/edit/widget/feel_state_bottom_sheet.dart';
 import 'package:fe/src/presentation/screen/edit/widget/profile_image_bottom_sheet.dart';
 import 'package:fe/src/presentation/screen/edit/widget/profile_image_modify_button.dart';
 import 'package:fe/src/presentation/screen/edit/widget/school_bottom_sheet.dart';
@@ -14,21 +17,26 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class EditScreen extends ConsumerStatefulWidget {
   const EditScreen({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _SettingScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _EditScreenState();
 }
 
-class _SettingScreenState extends ConsumerState<EditScreen> {
+class _EditScreenState extends ConsumerState<EditScreen> {
   final GlobalKey<FormState> formKey = GlobalKey();
-  bool isProfileInfoChanged = false;
   final FocusNode _nameFocus = FocusNode();
   final FocusNode _feelFocus = FocusNode();
 
+  bool isProfileInfoChanged = false;
+
+
   void onSubmitted(UserModel user) async {
+    print("onSubmitted");
     FocusScope.of(context).unfocus();
 
     if (formKey.currentState == null) {
@@ -37,31 +45,16 @@ class _SettingScreenState extends ConsumerState<EditScreen> {
 
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
-
       await ref.read(authControllerProvider.notifier).updateProfile(user: user);
-
       formKey.currentState!.reset();
-
-
       goToBeforeScreen();
     } else {
       print('invalid form');
     }
   }
 
-  void goToBeforeScreen() => Navigator.of(context).pop();
-  Widget _buildPopupButton({
-    String? labelText,
-    String? hintText,
-    required String? textValue,
-    required VoidCallback onTap,
-  }) {
-    return CustomPopupButton(
-      labelText: labelText,
-      hintText: hintText,
-      textValue: textValue,
-      onTap: onTap,
-    );
+  void goToBeforeScreen() {
+    Navigator.of(context).pop();
   }
   Widget _buildTextField({
     String? labelText,
@@ -87,11 +80,30 @@ class _SettingScreenState extends ConsumerState<EditScreen> {
     );
   }
 
+  Widget _buildPopupButton({
+    String? labelText,
+    String? hintText,
+    required String? textValue,
+    required VoidCallback onTap,
+  }) {
+    return CustomPopupButton(
+      labelText: labelText,
+      hintText: hintText,
+      textValue: textValue,
+      onTap: onTap,
+    );
+  }
+  final Map<FeelState, String> feelNames = {
+    FeelState.DRIVING: ('운전 중'),
+    FeelState.PARKING: ('주차 중'),
+    FeelState.COMMING_SOON: ('곧 돌아옵니다.'),
+    FeelState.BUSY: ('바쁨'),
+    FeelState.UNKNOWN : ('알 수 없음'),
+  };
+
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme
-        .of(context)
-        .textTheme;
+    final textTheme = Theme.of(context).textTheme;
     final account = ref.watch(authControllerProvider) as Authenticated;
     UserModel currentUser = account.user;
     UserModel updatedUser = account.updatedUser!;
@@ -117,19 +129,27 @@ class _SettingScreenState extends ConsumerState<EditScreen> {
         }
       }
     });
-
+    String name= updatedUser.name;
+    String feel= updatedUser.feel;
     if (account.updatedUser != null) {
       return GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
         child: ScrollableLayout(
           isAppBarVisible: true,
-          appBarTitle: Text('프로필 수정', style: textTheme.labelMedium),
+          appBarTitle:
+          Text(('editProfile'), style: textTheme.labelMedium),
           backgroundColor: Colors.white,
           innerTopPadding: 0,
           bottomTabBar: BottomSubmitButton(
-            onPressed: isProfileInfoChanged
-                ? () => onSubmitted(updatedUser)
-                : null,
+            onPressed: (){
+              updatedUser=updatedUser.copyWith(name: name, feel: feel);
+              if(name!=currentUser.name || feel!=currentUser.feel){
+                isProfileInfoChanged=true;
+              }
+              if(isProfileInfoChanged){
+                onSubmitted(updatedUser);
+              }
+            }
           ),
           children: [
             Form(
@@ -140,8 +160,7 @@ class _SettingScreenState extends ConsumerState<EditScreen> {
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 20),
                     child: ProfileImageModifyButton(
-                      onTap: () => _showProfileImageBottomSheet(),
-                    ),
+                        onTap: () => _showProfileImageBottomSheet()),
                   ),
                   Wrap(
                     runSpacing: 25,
@@ -149,49 +168,45 @@ class _SettingScreenState extends ConsumerState<EditScreen> {
                     children: [
                       _buildTextField(
                         labelText: ('닉네임'),
-                        hintText: ('닉네임을 작성하세요.'),
+                        hintText: ('닉네임을 입력하세요.'),
                         maxLength: 20,
                         initialValue: updatedUser.name,
-                        onChanged: (value) =>
-                            updateField(
-                              currentUser,
-                              updatedUser,
-                              'name',
-                              value,
-                            ),
+                        onChanged: (value) {
+                          name=value;
+                          print(name);
+                        },
                         focusNode: _nameFocus,
-                        validator: (value) =>
-                            FormValidateUtils().validateName(
-                                _nameFocus, value!),
+                        validator: (value) => FormValidateUtils()
+                            .validateName(_nameFocus, value!),
                       ),
+
                       _buildTextField(
-                        labelText: ('내 상태메세지'),
-                        hintText: ('내 상태 메세지를 입력하세요.'),
+                        labelText: ('내 상태 메세지를 입력하세요'),
+                        hintText: ('내 상태 메세지를 입력하세요'),
                         maxLength: 20,
                         initialValue: updatedUser.feel,
-                        onChanged: (value) =>
-                            updateField(
-                              currentUser,
-                              updatedUser,
-                              'feel',
-                              value,
-                            ),
+                        onChanged: (value) {
+                          feel=value;
+                        },
                         focusNode: _feelFocus,
-                        validator: (value) =>
-                            FormValidateUtils().validateName(
-                                _feelFocus, value!),
+                        validator: (value) => FormValidateUtils()
+                            .validateName(_feelFocus, value!),
                       ),
                       _buildPopupButton(
-                        labelText: ('내 상태'),
-                        textValue: updatedUser.feelState.toString(),
-                        onTap: () => _showSchoolBottomSheet(),
+                        labelText: '내 상태',
+                        textValue: feelNames[updatedUser.feelState],
+                        onTap: () => _showFeelStateBottomSheet(),
                       ),
-                      _buildPopupButton(
-                        labelText: ('내 온도'),
-                        textValue: updatedUser.emotionDegree.toString(),
-                        onTap: () => _showSchoolBottomSheet(),
-                      ),
-                      const SizedBox(height: 100),
+
+                      SizedBox(
+                          width: 200, // 원하는 너비
+                          height: 200, // 원하는 높이
+
+
+                        child: Image.memory(base64Decode(updatedUser.qrcode!))
+                      )
+
+
                     ],
                   ),
                 ],
@@ -202,7 +217,7 @@ class _SettingScreenState extends ConsumerState<EditScreen> {
       );
     } else {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.of(context).pop();
+        //context.go(Routes.myPage);
       });
       return const SizedBox.shrink();
     }
@@ -213,19 +228,19 @@ class _SettingScreenState extends ConsumerState<EditScreen> {
     switch (field) {
       case 'name':
         ref.watch(authControllerProvider.notifier).setProfile(
-          user: currentUser,
-          updatedUser: updateUser.copyWith(name: value),
-        );
+            user: currentUser, updatedUser: updateUser.copyWith(name: value));
         break;
-      case 'feel':
-        ref.watch(authControllerProvider.notifier).setProfile(
-          user: currentUser,
-          updatedUser: updateUser.copyWith(feel: value),
-        );
-        break;
+
     }
   }
-
+  void _showFeelStateBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return const AdaptiveBottomSheet(childWidget: FeelStateBottomSheet());
+      },
+    );
+  }
 
   void _showProfileImageBottomSheet() {
     showModalBottomSheet(
@@ -237,13 +252,5 @@ class _SettingScreenState extends ConsumerState<EditScreen> {
     );
   }
 
-  void _showSchoolBottomSheet() {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return const AdaptiveBottomSheet(childWidget: SchoolBottomSheet());
-      },
-    );
-  }
-
 }
+

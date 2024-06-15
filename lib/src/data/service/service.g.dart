@@ -89,7 +89,7 @@ class _AuthService implements AuthService {
     )
         .compose(
           _dio.options,
-          '/user',
+          '/modify',
           queryParameters: queryParameters,
           data: _data,
         )

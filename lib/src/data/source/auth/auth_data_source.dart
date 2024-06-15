@@ -73,8 +73,26 @@ class AuthDataSource implements AuthRepository{
   Future<UserModel?> getUser({required UserModel user}) => _service.getUser(user.email);
 
   @override
-  Future<void> updateUser({required UserModel user}) =>
-      _service.updateUser(user.toJson());
+  Future<void> updateUser({required UserModel user}) async {
+    final Dio dio = Dio();
+    await dio.put(
+      'http://34.47.108.136:8080/modify',
+      data: toJsonSig(user),
+    );
+
+  }
+  Map<String, dynamic> toJsonSig(UserModel userModel) {
+    return {
+      'email': userModel.email,
+      'name': userModel.name,
+      'source': userModel.source,
+      'profileImage': userModel.profileImage,
+      'feelState': userModel.feelState.toJson(userModel.feelState),
+      'feel': userModel.feel,
+      'emotionDegree': userModel.emotionDegree?.toJson(userModel.emotionDegree!),
+      'qrcode': userModel.qrcode,
+    };
+  }
 
   @override
   Future<void> deleteUser() => _service.deleteUser();

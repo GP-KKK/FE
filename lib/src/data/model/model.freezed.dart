@@ -770,16 +770,12 @@ abstract class UserLoading implements UserBase {
   const factory UserLoading() = _$UserLoadingImpl;
 }
 
-UserModel _$UserModelFromJson(Map<String, dynamic> json) {
-  return _UserModel.fromJson(json);
-}
-
 /// @nodoc
 mixin _$UserModel {
   String get email => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get source => throw _privateConstructorUsedError; // sns 정보 기반
-  @JsonKey(name: 'profile_image', includeIfNull: false)
+  @JsonKey(includeIfNull: false)
   String? get profileImage => throw _privateConstructorUsedError;
   FeelState get feelState => throw _privateConstructorUsedError;
   String get feel => throw _privateConstructorUsedError;
@@ -788,7 +784,6 @@ mixin _$UserModel {
   @JsonKey(includeIfNull: false)
   String? get qrcode => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $UserModelCopyWith<UserModel> get copyWith =>
       throw _privateConstructorUsedError;
@@ -803,8 +798,7 @@ abstract class $UserModelCopyWith<$Res> {
       {String email,
       String name,
       String? source,
-      @JsonKey(name: 'profile_image', includeIfNull: false)
-      String? profileImage,
+      @JsonKey(includeIfNull: false) String? profileImage,
       FeelState feelState,
       String feel,
       @JsonKey(includeIfNull: false) EmotionDegree? emotionDegree,
@@ -882,8 +876,7 @@ abstract class _$$UserModelImplCopyWith<$Res>
       {String email,
       String name,
       String? source,
-      @JsonKey(name: 'profile_image', includeIfNull: false)
-      String? profileImage,
+      @JsonKey(includeIfNull: false) String? profileImage,
       FeelState feelState,
       String feel,
       @JsonKey(includeIfNull: false) EmotionDegree? emotionDegree,
@@ -948,20 +941,17 @@ class __$$UserModelImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$UserModelImpl implements _UserModel {
   _$UserModelImpl(
       {required this.email,
       required this.name,
       this.source,
-      @JsonKey(name: 'profile_image', includeIfNull: false) this.profileImage,
-      this.feelState = FeelState.unknown,
+      @JsonKey(includeIfNull: false) this.profileImage,
+      this.feelState = FeelState.UNKNOWN,
       this.feel = '',
       @JsonKey(includeIfNull: false) this.emotionDegree,
       @JsonKey(includeIfNull: false) this.qrcode});
-
-  factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$UserModelImplFromJson(json);
 
   @override
   final String email;
@@ -971,7 +961,7 @@ class _$UserModelImpl implements _UserModel {
   final String? source;
 // sns 정보 기반
   @override
-  @JsonKey(name: 'profile_image', includeIfNull: false)
+  @JsonKey(includeIfNull: false)
   final String? profileImage;
   @override
   @JsonKey()
@@ -1009,7 +999,6 @@ class _$UserModelImpl implements _UserModel {
             (identical(other.qrcode, qrcode) || other.qrcode == qrcode));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, email, name, source,
       profileImage, feelState, feel, emotionDegree, qrcode);
@@ -1021,10 +1010,9 @@ class _$UserModelImpl implements _UserModel {
       __$$UserModelImplCopyWithImpl<_$UserModelImpl>(this, _$identity);
 
   @override
-  Map<String, dynamic> toJson() {
-    return _$$UserModelImplToJson(
-      this,
-    );
+  Map<String, dynamic> toJsonSig(UserModel userModel) {
+    // TODO: implement toJsonSig
+    throw UnimplementedError();
   }
 }
 
@@ -1033,15 +1021,11 @@ abstract class _UserModel implements UserModel {
       {required final String email,
       required final String name,
       final String? source,
-      @JsonKey(name: 'profile_image', includeIfNull: false)
-      final String? profileImage,
+      @JsonKey(includeIfNull: false) final String? profileImage,
       final FeelState feelState,
       final String feel,
       @JsonKey(includeIfNull: false) final EmotionDegree? emotionDegree,
       @JsonKey(includeIfNull: false) final String? qrcode}) = _$UserModelImpl;
-
-  factory _UserModel.fromJson(Map<String, dynamic> json) =
-      _$UserModelImpl.fromJson;
 
   @override
   String get email;
@@ -1050,7 +1034,7 @@ abstract class _UserModel implements UserModel {
   @override
   String? get source;
   @override // sns 정보 기반
-  @JsonKey(name: 'profile_image', includeIfNull: false)
+  @JsonKey(includeIfNull: false)
   String? get profileImage;
   @override
   FeelState get feelState;

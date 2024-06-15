@@ -2,71 +2,76 @@ part of '../model.dart';
 
 
 enum FeelState {
-  @JsonValue('driving')
-  driving,
-  @JsonValue('parking')
-  parking,
-  @JsonValue('commingsoon')
-  commingsoon,
-  @JsonValue('busy')
-  busy,
-  @JsonValue('unknown') // 여기서 UNKNOWN과 매핑
-  unknown,
-  @JsonValue('hot')
-  hot,
+  @JsonValue('DRIVING')
+  DRIVING,
+  @JsonValue('PARKING')
+  PARKING,
+  @JsonValue('COMMING_SOON')
+  COMMING_SOON,
+  @JsonValue('BUSY')
+  BUSY,
+  @JsonValue('UNKNOWN') // 여기서 UNKNOWN과 매핑
+  UNKNOWN,
 }
 enum EmotionDegree {
-  @JsonValue('veryGood')
-  veryGood,
-  @JsonValue('good')
-  good,
-  @JsonValue('normal')
-  normal,
-  @JsonValue('bad')
-  bad,
-  @JsonValue('veryBad')
-  veryBad,
-  @JsonValue('unknown')
-  unknown,
+  @JsonValue('VERYGOOD')
+  VERYGOOD,
+  @JsonValue('GOOD')
+  GOOD,
+  @JsonValue('NORMAL')
+  NORMAL,
+  @JsonValue('BAD')
+  BAD,
+  @JsonValue('VERYBAD')
+  VERYBAD,
+  @JsonValue('UNKNOWN')
+  UNKNOWN,
 }
 extension FeelStateExtension on FeelState {
   static FeelState fromJson(String? json) {
-    if (json == null) return FeelState.unknown;
+    if (json == null) return FeelState.UNKNOWN;
     switch (json) {
-      case 'driving':
-        return FeelState.driving;
-      case 'parking':
-        return FeelState.parking;
-      case 'comingsoon':
-        return FeelState.commingsoon;
-      case 'busy':
-        return FeelState.busy;
-      case 'hot':
-        return FeelState.hot;
+      case 'DRIVING':
+        return FeelState.DRIVING;
+      case 'PARKING':
+        return FeelState.PARKING;
+      case 'COMMING_SOON':
+        return FeelState.COMMING_SOON;
+      case 'BUSY':
+        return FeelState.BUSY;
       default:
-        return FeelState.unknown;
+        return FeelState.UNKNOWN;
     }
   }
+
+  String toJson(FeelState feelState) {
+    return feelState.toString().split('.').last;
+  }
+
 }
 
 extension EmotionDegreeExtension on EmotionDegree {
   static EmotionDegree fromJson(String? json) {
-    if (json == null) return EmotionDegree.unknown;
+    if (json == null) return EmotionDegree.UNKNOWN;
     switch (json) {
       case 'veryGood':
-        return EmotionDegree.veryGood;
+        return EmotionDegree.VERYGOOD;
       case 'good':
-        return EmotionDegree.good;
+        return EmotionDegree.GOOD;
       case 'normal':
-        return EmotionDegree.normal;
+        return EmotionDegree.NORMAL;
       case 'bad':
-        return EmotionDegree.bad;
+        return EmotionDegree.BAD;
       case 'veryBad':
-        return EmotionDegree.veryBad;
+        return EmotionDegree.VERYBAD;
       default:
-        return EmotionDegree.unknown;
+        return EmotionDegree.UNKNOWN;
     }
   }
+  String toJson(EmotionDegree emotionDegree) {
+    return emotionDegree.toString().split('.').last;
+  }
+
 }
 
 
@@ -83,8 +88,8 @@ class UserModel with _$UserModel {
     required String email,
     required String name,
     String? source, // sns 정보 기반
-    @JsonKey(name: 'profile_image', includeIfNull: false) String? profileImage,
-    @Default(FeelState.unknown) FeelState feelState,
+    @JsonKey(includeIfNull: false) String? profileImage,
+    @Default(FeelState.UNKNOWN) FeelState feelState,
     @Default('') String feel,
     @JsonKey(includeIfNull: false) EmotionDegree? emotionDegree,
     @JsonKey(includeIfNull: false) String? qrcode,
@@ -102,4 +107,5 @@ class UserModel with _$UserModel {
       qrcode: json['qrcode'] as String?,
     );
   }
+
 }

@@ -198,19 +198,28 @@ PreferredSizeWidget bottom(UserModel user, BuildContext context) {
   );
 }
 
-class _ProfileButton extends StatelessWidget {
+class _ProfileButton extends ConsumerStatefulWidget {
   final UserModel user;
 
   const _ProfileButton({required this.user});
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _ProfileButtonState();
+
+}
+
+class _ProfileButtonState extends ConsumerState<_ProfileButton>{
 
   @override
   Widget build(BuildContext context) {
     //Sentry에 전달될 사용자 정보
 
     final textTheme = Theme.of(context).textTheme;
-
     return ScaleCustomButton(
-      onTap: () {
+      onTap: () async {
+        await ref
+            .read(authControllerProvider.notifier)
+            .initProfile(widget.user.email!);
         Navigator.pushNamed(context, '/edit');
       },
       child: Container(
@@ -236,10 +245,10 @@ class _ProfileButton extends StatelessWidget {
         ),
         child: Row(
           children: [
-            if (user.profileImage != null)
+            if (widget.user.profileImage != null)
               UserProfileIcon(
                 size: 56,
-                profileImage: user.profileImage!,
+                profileImage: widget.user.profileImage!,
               ),
             const SizedBox(
               width: 12,
@@ -250,12 +259,12 @@ class _ProfileButton extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    user.feel,
+                    widget.user.feel,
                     style: textTheme.labelSmall!.copyWith(
                       color: ColorTheme.slateColor[600],
                     ),
                   ),
-                  Text(user.name, style: textTheme.displaySmall),
+                  Text(widget.user.name, style: textTheme.displaySmall),
                 ],
               ),
             )
@@ -263,7 +272,10 @@ class _ProfileButton extends StatelessWidget {
         ),
       ),
     );
+
   }
+
+
 }
 
 
