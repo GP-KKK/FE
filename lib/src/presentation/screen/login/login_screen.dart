@@ -1,5 +1,6 @@
 import 'package:fe/src/presentation/controller/controller.dart';
 import 'package:fe/src/presentation/layout/static_layout.dart';
+import 'package:fe/src/presentation/screen/home/home_screen.dart';
 import 'package:fe/src/presentation/screen/login/widget/social_login_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,7 +23,11 @@ class LoginScreen extends ConsumerWidget {
     ref.listen<AuthState>(authControllerProvider, (_, state) {
       switch (state) {
         case Authenticated():
-          Navigator.of(context).pushNamed('/home_screen');
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+          );
+
+          //Navigator.of(context).pushNamed('/home_screen');
       }
     });
 

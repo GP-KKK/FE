@@ -1,141 +1,60 @@
+import 'dart:convert';
+
 import 'package:fe/src/data/model/model.dart';
 import 'package:fe/src/presentation/common/adaptive_bottom_sheet.dart';
 import 'package:fe/src/presentation/common/bottom_submit_button.dart';
 import 'package:fe/src/presentation/common/custom_popup_button.dart';
 import 'package:fe/src/presentation/common/custom_text_field.dart';
+import 'package:fe/src/presentation/controller/controller.dart';
 import 'package:fe/src/presentation/layout/scollable_layout.dart';
+import 'package:fe/src/presentation/screen/edit/widget/feel_state_bottom_sheet.dart';
 import 'package:fe/src/presentation/screen/edit/widget/profile_image_bottom_sheet.dart';
 import 'package:fe/src/presentation/screen/edit/widget/profile_image_modify_button.dart';
 import 'package:fe/src/presentation/screen/edit/widget/school_bottom_sheet.dart';
+import 'package:fe/src/presentation/utils/form_validate_utils.dart';
 import 'package:fe/src/shared/theme/text_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class EditScreen extends ConsumerStatefulWidget {
   const EditScreen({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _SettingScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _EditScreenState();
 }
 
-class _SettingScreenState extends ConsumerState<EditScreen> {
-  // enum FeelState{
-  // driving,
-  // parking,
-  // commingsoon,
-  // busy,
-  // unknown
-  // }
-  final Map<FeelState, String> feelNames = {
-    FeelState.driving: ('운전 중'),
-    FeelState.parking: ('주차 중'),
-    FeelState.commingsoon: ('곧 돌아옵니다.'),
-    FeelState.busy: ('바쁨'),
-    FeelState.unknown : ('알 수 없음'),
-    FeelState.hot: ('45.8도'),
-  };
+class _EditScreenState extends ConsumerState<EditScreen> {
+  final GlobalKey<FormState> formKey = GlobalKey();
+  final FocusNode _nameFocus = FocusNode();
+  final FocusNode _feelFocus = FocusNode();
+
+  bool isProfileInfoChanged = false;
 
 
+  void onSubmitted(UserModel user) async {
+    print("onSubmitted");
+    FocusScope.of(context).unfocus();
 
-  UserModel currentUser = UserModel(
-      email: '123kim003@gmail.com',
-      name: '빵빵이',
-      feel: "건들지마소",
-      profileImage: 'pig');
-  UserModel updatedUser = UserModel(
-      email: 'newEmail@gmail.com',
-      name: 'kimsm',
-      feel: "very bad",
-      profileImage: 'cow');
+    if (formKey.currentState == null) {
+      return;
+    }
 
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-      child: ScrollableLayout(
-        isAppBarVisible: true,
-        appBarTitle:
-        Text('프로필 수정', style: textTheme.labelMedium),
-        backgroundColor: Colors.white,
-        innerTopPadding: 0,
-        bottomTabBar: const BottomSubmitButton(
-          onPressed: null,
-          //isProfileInfoChanged ? () => onSubmitted(updatedUser) : null,
-        ),
-        children: [
-          Form(
-            //key: formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 20),
-                  child: ProfileImageModifyButton(
-                      onTap: () => _showProfileImageBottomSheet()),
-                ),
-                Wrap(
-                  runSpacing: 25,
-                  spacing: 25,
-                  children: [
-                    _buildTextField(// 닉네임
-                      labelText: ('닉네임'),
-                      hintText: ('닉네임을 작성하세요.'),
-                      maxLength: 20,
-                      initialValue: '빵빵이',
-                      onChanged: (value) => updateField(
-                          currentUser, updatedUser, 'name', value),
-                      // focusNode: _nameFocus,
-                      // validator: (value) => FormValidateUtils()
-                      //     .validateName(_nameFocus, value!),
-                    ),
-                    _buildTextField(// 내 상태
-                      labelText: ('내 상태메세지'),
-                      hintText: ('내 상태 메세지를 입력하세요.'),
-                      maxLength: 20,
-                      initialValue: '옥지얌. 운전할 때 말 걸지마',
-                      onChanged: (value) => updateField(
-                          currentUser, updatedUser, 'name', value),
-                      // focusNode: _nameFocus,
-                      // validator: (value) => FormValidateUtils()
-                      //     .validateName(_nameFocus, value!),
-                    ),
-
-                    _buildPopupButton(
-                      labelText: ('내 상태'),
-
-                      textValue: feelNames[FeelState.busy],
-                      onTap: () => _showSchoolBottomSheet(),
-                    ),
-
-                    _buildPopupButton(
-                      labelText: ('내 온도'),
-
-                      textValue: feelNames[FeelState.hot],
-                      onTap: () => _showSchoolBottomSheet(),
-                    ),
-
-                    // if (updatedUser.role == Role.child)
-                    //   _buildSchoolAndGradeSection(currentUser, updatedUser),
-                    // if (updatedUser.role == Role.child)
-                    //   _buildAssistantSection(),
-                    const SizedBox(height: 100),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+      await ref.read(authControllerProvider.notifier).updateProfile(user: user);
+      formKey.currentState!.reset();
+      goToBeforeScreen();
+    } else {
+      print('invalid form');
+    }
   }
 
-  void iconOnTap() {
-    setState(() {
-      print('icon selected');
-    });
+  void goToBeforeScreen() {
+    Navigator.of(context).pop();
   }
   Widget _buildTextField({
     String? labelText,
@@ -160,62 +79,6 @@ class _SettingScreenState extends ConsumerState<EditScreen> {
       keyboardType: keyboardType,
     );
   }
-  void updateField(UserModel currentUser, UserModel updateUser, String field,
-      dynamic value) {
-    // switch (field) {
-    //   case 'name':
-    //     ref.watch(authControllerProvider.notifier).setProfile(
-    //         user: currentUser, updatedUser: updateUser.copyWith(name: value));
-    //     break;
-    //   case 'grade':
-    //     ref.watch(authControllerProvider.notifier).setProfile(
-    //         user: currentUser,
-    //         updatedUser: updateUser.copyWith(grade: int.tryParse(value)));
-    //     break;
-    // }
-  }
-
-  Widget buildRowWithCircles(GestureTapCallback onTap) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        buildCircle(onTap),
-        buildCircle(onTap),
-        buildCircle(onTap),
-      ],
-    );
-  }
-  Widget buildCircle(GestureTapCallback onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 100,
-        height: 100,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.blue,
-        ),
-        child: Center(child: Text('icon')),
-      ),
-    );
-  }
-  void _showProfileImageBottomSheet() {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return const AdaptiveBottomSheet(
-            childWidget: ProfileImageBottomSheet());
-      },
-    );
-  }
-  void _showSchoolBottomSheet() {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return const AdaptiveBottomSheet(childWidget: SchoolBottomSheet());
-      },
-    );
-  }
 
   Widget _buildPopupButton({
     String? labelText,
@@ -230,5 +93,164 @@ class _SettingScreenState extends ConsumerState<EditScreen> {
       onTap: onTap,
     );
   }
+  final Map<FeelState, String> feelNames = {
+    FeelState.DRIVING: ('운전 중'),
+    FeelState.PARKING: ('주차 중'),
+    FeelState.COMMING_SOON: ('곧 돌아옵니다.'),
+    FeelState.BUSY: ('바쁨'),
+    FeelState.UNKNOWN : ('알 수 없음'),
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final account = ref.watch(authControllerProvider) as Authenticated;
+    UserModel currentUser = account.user;
+    UserModel updatedUser = account.updatedUser!;
+
+    ref.listen<AuthState>(authControllerProvider, (_, state) {
+      if (state is Authenticated) {
+        final UserModel updatedUser = state.updatedUser!;
+
+        // UserModel의 모든 필드를 비교
+        bool hasChanged = currentUser.name != updatedUser.name ||
+            currentUser.email != updatedUser.email ||
+            currentUser.profileImage != updatedUser.profileImage ||
+            currentUser.source != updatedUser.source ||
+            currentUser.feelState != updatedUser.feelState ||
+            currentUser.feel != updatedUser.feel ||
+            currentUser.emotionDegree != updatedUser.emotionDegree;
+
+        // 상태 변경 감지 시 UI 업데이트
+        if (hasChanged) {
+          setState(() {
+            isProfileInfoChanged = true;
+          });
+        }
+      }
+    });
+    String name= updatedUser.name;
+    String feel= updatedUser.feel;
+    if (account.updatedUser != null) {
+      return GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+        child: ScrollableLayout(
+          isAppBarVisible: true,
+          appBarTitle:
+          Text(('editProfile'), style: textTheme.labelMedium),
+          backgroundColor: Colors.white,
+          innerTopPadding: 0,
+          bottomTabBar: BottomSubmitButton(
+            onPressed: (){
+              updatedUser=updatedUser.copyWith(name: name, feel: feel);
+              if(name!=currentUser.name || feel!=currentUser.feel){
+                isProfileInfoChanged=true;
+              }
+              if(isProfileInfoChanged){
+                onSubmitted(updatedUser);
+              }
+            }
+          ),
+          children: [
+            Form(
+              key: formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 20),
+                    child: ProfileImageModifyButton(
+                        onTap: () => _showProfileImageBottomSheet()),
+                  ),
+                  Wrap(
+                    runSpacing: 25,
+                    spacing: 25,
+                    children: [
+                      _buildTextField(
+                        labelText: ('닉네임'),
+                        hintText: ('닉네임을 입력하세요.'),
+                        maxLength: 20,
+                        initialValue: updatedUser.name,
+                        onChanged: (value) {
+                          name=value;
+                          print(name);
+                        },
+                        focusNode: _nameFocus,
+                        validator: (value) => FormValidateUtils()
+                            .validateName(_nameFocus, value!),
+                      ),
+
+                      _buildTextField(
+                        labelText: ('내 상태 메세지를 입력하세요'),
+                        hintText: ('내 상태 메세지를 입력하세요'),
+                        maxLength: 20,
+                        initialValue: updatedUser.feel,
+                        onChanged: (value) {
+                          feel=value;
+                        },
+                        focusNode: _feelFocus,
+                        validator: (value) => FormValidateUtils()
+                            .validateName(_feelFocus, value!),
+                      ),
+                      _buildPopupButton(
+                        labelText: '내 상태',
+                        textValue: feelNames[updatedUser.feelState],
+                        onTap: () => _showFeelStateBottomSheet(),
+                      ),
+
+                      SizedBox(
+                          width: 200, // 원하는 너비
+                          height: 200, // 원하는 높이
+
+
+                        child: Image.memory(base64Decode(updatedUser.qrcode!))
+                      )
+
+
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        //context.go(Routes.myPage);
+      });
+      return const SizedBox.shrink();
+    }
+  }
+
+  void updateField(UserModel currentUser, UserModel updateUser, String field,
+      dynamic value) {
+    switch (field) {
+      case 'name':
+        ref.watch(authControllerProvider.notifier).setProfile(
+            user: currentUser, updatedUser: updateUser.copyWith(name: value));
+        break;
+
+    }
+  }
+  void _showFeelStateBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return const AdaptiveBottomSheet(childWidget: FeelStateBottomSheet());
+      },
+    );
+  }
+
+  void _showProfileImageBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return const AdaptiveBottomSheet(
+            childWidget: ProfileImageBottomSheet());
+      },
+    );
+  }
 
 }
+

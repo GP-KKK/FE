@@ -3,11 +3,10 @@ import 'dart:io';
 import 'package:fe/src/data/model/model.dart';
 import 'package:fe/src/presentation/common/scale_custom_button.dart';
 import 'package:fe/src/presentation/common/user_profile_icon.dart';
+import 'package:fe/src/presentation/controller/controller.dart';
 import 'package:fe/src/shared/theme/color_theme.dart';
-import 'package:fe/src/shared/theme/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -37,6 +36,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   }
 
   Widget _buildHomeScreen() {
+    final account = ref.watch(authControllerProvider);
+    account is Authenticated ? account.user : null;
+
     return Container(
       decoration: const BoxDecoration(gradient: ColorTheme.primaryGradient),
       child: Scaffold(
@@ -60,7 +62,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                 floating: true,
                 pinned: true,
                 flexibleSpace: flexibleSpace,
-                bottom: bottom(dummy_user, context),
+                bottom: account is Authenticated ? bottom( account.user, context) :bottom( dummy_user, context)
               ),
               SliverList(
                 delegate: SliverChildListDelegate(
@@ -156,10 +158,9 @@ PreferredSizeWidget bottom(UserModel user, BuildContext context) {
       child: Row(
 
         children: [
-          if (user != null)
-            Expanded(
-              child: _ProfileButton(user: user),
-            ),
+          Expanded(
+            child: _ProfileButton(user: user),
+          ),
           const SizedBox(
             width: 10,
           ),
@@ -197,19 +198,28 @@ PreferredSizeWidget bottom(UserModel user, BuildContext context) {
   );
 }
 
-class _ProfileButton extends StatelessWidget {
+class _ProfileButton extends ConsumerStatefulWidget {
   final UserModel user;
 
   const _ProfileButton({required this.user});
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _ProfileButtonState();
+
+}
+
+class _ProfileButtonState extends ConsumerState<_ProfileButton>{
 
   @override
   Widget build(BuildContext context) {
     //Sentry에 전달될 사용자 정보
 
     final textTheme = Theme.of(context).textTheme;
-
     return ScaleCustomButton(
-      onTap: () {
+      onTap: () async {
+        await ref
+            .read(authControllerProvider.notifier)
+            .initProfile(widget.user.email!);
         Navigator.pushNamed(context, '/edit');
       },
       child: Container(
@@ -235,10 +245,10 @@ class _ProfileButton extends StatelessWidget {
         ),
         child: Row(
           children: [
-            if (user.profileImage != null)
+            if (widget.user.profileImage != null)
               UserProfileIcon(
                 size: 56,
-                profileImage: user.profileImage!,
+                profileImage: widget.user.profileImage!,
               ),
             const SizedBox(
               width: 12,
@@ -248,14 +258,13 @@ class _ProfileButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (user.feel != null)
-                    Text(
-                      user.feel,
-                      style: textTheme.labelSmall!.copyWith(
-                        color: ColorTheme.slateColor[600],
-                      ),
+                  Text(
+                    widget.user.feel,
+                    style: textTheme.labelSmall!.copyWith(
+                      color: ColorTheme.slateColor[600],
                     ),
-                  Text(user.name, style: textTheme.displaySmall),
+                  ),
+                  Text(widget.user.name, style: textTheme.displaySmall),
                 ],
               ),
             )
@@ -263,7 +272,10 @@ class _ProfileButton extends StatelessWidget {
         ),
       ),
     );
+
   }
+
+
 }
 
 

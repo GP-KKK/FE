@@ -6,3 +6,4 @@ import 'package:retrofit/retrofit.dart';
 part 'service.g.dart';
 
 part 'auth/auth_service.dart';
+part 'news/news_service.dart';

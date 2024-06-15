@@ -94,11 +94,11 @@ class _QRViewExampleState extends State<QRViewExample> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  // if (result != null)
-                  //   Text(
-                  //       'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
-                  // else
-                  //   const Text('Scan a code'),
+                  if (result != null)
+                    Text(
+                        'Data: ${result!.code}')
+                  else
+                    const Text('Scan a code'),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -208,7 +208,9 @@ class _QRViewExampleState extends State<QRViewExample> {
         result = scanData;
       });
       //
-       Navigator.of(context).pushNamed('/loading');
+      print("---------");
+      print (scanData);
+      print(result!.code);
     });
   }
 

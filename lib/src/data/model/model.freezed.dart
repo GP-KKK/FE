@@ -14,6 +14,301 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+NewsList _$NewsListFromJson(Map<String, dynamic> json) {
+  return _NewsList.fromJson(json);
+}
+
+/// @nodoc
+mixin _$NewsList {
+  List<NewsModel> get data => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $NewsListCopyWith<NewsList> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $NewsListCopyWith<$Res> {
+  factory $NewsListCopyWith(NewsList value, $Res Function(NewsList) then) =
+      _$NewsListCopyWithImpl<$Res, NewsList>;
+  @useResult
+  $Res call({List<NewsModel> data});
+}
+
+/// @nodoc
+class _$NewsListCopyWithImpl<$Res, $Val extends NewsList>
+    implements $NewsListCopyWith<$Res> {
+  _$NewsListCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? data = null,
+  }) {
+    return _then(_value.copyWith(
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<NewsModel>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$NewsListImplCopyWith<$Res>
+    implements $NewsListCopyWith<$Res> {
+  factory _$$NewsListImplCopyWith(
+          _$NewsListImpl value, $Res Function(_$NewsListImpl) then) =
+      __$$NewsListImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({List<NewsModel> data});
+}
+
+/// @nodoc
+class __$$NewsListImplCopyWithImpl<$Res>
+    extends _$NewsListCopyWithImpl<$Res, _$NewsListImpl>
+    implements _$$NewsListImplCopyWith<$Res> {
+  __$$NewsListImplCopyWithImpl(
+      _$NewsListImpl _value, $Res Function(_$NewsListImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? data = null,
+  }) {
+    return _then(_$NewsListImpl(
+      data: null == data
+          ? _value._data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<NewsModel>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$NewsListImpl implements _NewsList {
+  const _$NewsListImpl({required final List<NewsModel> data}) : _data = data;
+
+  factory _$NewsListImpl.fromJson(Map<String, dynamic> json) =>
+      _$$NewsListImplFromJson(json);
+
+  final List<NewsModel> _data;
+  @override
+  List<NewsModel> get data {
+    if (_data is EqualUnmodifiableListView) return _data;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_data);
+  }
+
+  @override
+  String toString() {
+    return 'NewsList(data: $data)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$NewsListImpl &&
+            const DeepCollectionEquality().equals(other._data, _data));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_data));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$NewsListImplCopyWith<_$NewsListImpl> get copyWith =>
+      __$$NewsListImplCopyWithImpl<_$NewsListImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$NewsListImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _NewsList implements NewsList {
+  const factory _NewsList({required final List<NewsModel> data}) =
+      _$NewsListImpl;
+
+  factory _NewsList.fromJson(Map<String, dynamic> json) =
+      _$NewsListImpl.fromJson;
+
+  @override
+  List<NewsModel> get data;
+  @override
+  @JsonKey(ignore: true)
+  _$$NewsListImplCopyWith<_$NewsListImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+NewsModel _$NewsModelFromJson(Map<String, dynamic> json) {
+  return _NewsModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$NewsModel {
+  String get title => throw _privateConstructorUsedError;
+  String get url => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $NewsModelCopyWith<NewsModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $NewsModelCopyWith<$Res> {
+  factory $NewsModelCopyWith(NewsModel value, $Res Function(NewsModel) then) =
+      _$NewsModelCopyWithImpl<$Res, NewsModel>;
+  @useResult
+  $Res call({String title, String url});
+}
+
+/// @nodoc
+class _$NewsModelCopyWithImpl<$Res, $Val extends NewsModel>
+    implements $NewsModelCopyWith<$Res> {
+  _$NewsModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? title = null,
+    Object? url = null,
+  }) {
+    return _then(_value.copyWith(
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$NewsModelImplCopyWith<$Res>
+    implements $NewsModelCopyWith<$Res> {
+  factory _$$NewsModelImplCopyWith(
+          _$NewsModelImpl value, $Res Function(_$NewsModelImpl) then) =
+      __$$NewsModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String title, String url});
+}
+
+/// @nodoc
+class __$$NewsModelImplCopyWithImpl<$Res>
+    extends _$NewsModelCopyWithImpl<$Res, _$NewsModelImpl>
+    implements _$$NewsModelImplCopyWith<$Res> {
+  __$$NewsModelImplCopyWithImpl(
+      _$NewsModelImpl _value, $Res Function(_$NewsModelImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? title = null,
+    Object? url = null,
+  }) {
+    return _then(_$NewsModelImpl(
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$NewsModelImpl implements _NewsModel {
+  const _$NewsModelImpl({required this.title, required this.url});
+
+  factory _$NewsModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$NewsModelImplFromJson(json);
+
+  @override
+  final String title;
+  @override
+  final String url;
+
+  @override
+  String toString() {
+    return 'NewsModel(title: $title, url: $url)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$NewsModelImpl &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.url, url) || other.url == url));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, title, url);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$NewsModelImplCopyWith<_$NewsModelImpl> get copyWith =>
+      __$$NewsModelImplCopyWithImpl<_$NewsModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$NewsModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _NewsModel implements NewsModel {
+  const factory _NewsModel(
+      {required final String title,
+      required final String url}) = _$NewsModelImpl;
+
+  factory _NewsModel.fromJson(Map<String, dynamic> json) =
+      _$NewsModelImpl.fromJson;
+
+  @override
+  String get title;
+  @override
+  String get url;
+  @override
+  @JsonKey(ignore: true)
+  _$$NewsModelImplCopyWith<_$NewsModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 /// @nodoc
 mixin _$UserBase {
   @optionalTypeArgs
@@ -475,24 +770,20 @@ abstract class UserLoading implements UserBase {
   const factory UserLoading() = _$UserLoadingImpl;
 }
 
-UserModel _$UserModelFromJson(Map<String, dynamic> json) {
-  return _UserModel.fromJson(json);
-}
-
 /// @nodoc
 mixin _$UserModel {
   String get email => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  dynamic get source => throw _privateConstructorUsedError; //sns 정보 기반
-  @JsonKey(name: 'profile_image', includeIfNull: false)
-  String? get profileImage => throw _privateConstructorUsedError;
+  String? get source => throw _privateConstructorUsedError; // sns 정보 기반
   @JsonKey(includeIfNull: false)
+  String? get profileImage => throw _privateConstructorUsedError;
   FeelState get feelState => throw _privateConstructorUsedError;
   String get feel => throw _privateConstructorUsedError;
-  @JsonKey(name: 'emotion_degree', includeIfNull: false)
-  EmotionDegree get emotionDegree => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
+  EmotionDegree? get emotionDegree => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
+  String? get qrcode => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $UserModelCopyWith<UserModel> get copyWith =>
       throw _privateConstructorUsedError;
@@ -506,13 +797,12 @@ abstract class $UserModelCopyWith<$Res> {
   $Res call(
       {String email,
       String name,
-      dynamic source,
-      @JsonKey(name: 'profile_image', includeIfNull: false)
-      String? profileImage,
-      @JsonKey(includeIfNull: false) FeelState feelState,
+      String? source,
+      @JsonKey(includeIfNull: false) String? profileImage,
+      FeelState feelState,
       String feel,
-      @JsonKey(name: 'emotion_degree', includeIfNull: false)
-      EmotionDegree emotionDegree});
+      @JsonKey(includeIfNull: false) EmotionDegree? emotionDegree,
+      @JsonKey(includeIfNull: false) String? qrcode});
 }
 
 /// @nodoc
@@ -534,7 +824,8 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? profileImage = freezed,
     Object? feelState = null,
     Object? feel = null,
-    Object? emotionDegree = null,
+    Object? emotionDegree = freezed,
+    Object? qrcode = freezed,
   }) {
     return _then(_value.copyWith(
       email: null == email
@@ -548,7 +839,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
       source: freezed == source
           ? _value.source
           : source // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as String?,
       profileImage: freezed == profileImage
           ? _value.profileImage
           : profileImage // ignore: cast_nullable_to_non_nullable
@@ -561,10 +852,14 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.feel
           : feel // ignore: cast_nullable_to_non_nullable
               as String,
-      emotionDegree: null == emotionDegree
+      emotionDegree: freezed == emotionDegree
           ? _value.emotionDegree
           : emotionDegree // ignore: cast_nullable_to_non_nullable
-              as EmotionDegree,
+              as EmotionDegree?,
+      qrcode: freezed == qrcode
+          ? _value.qrcode
+          : qrcode // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -580,13 +875,12 @@ abstract class _$$UserModelImplCopyWith<$Res>
   $Res call(
       {String email,
       String name,
-      dynamic source,
-      @JsonKey(name: 'profile_image', includeIfNull: false)
-      String? profileImage,
-      @JsonKey(includeIfNull: false) FeelState feelState,
+      String? source,
+      @JsonKey(includeIfNull: false) String? profileImage,
+      FeelState feelState,
       String feel,
-      @JsonKey(name: 'emotion_degree', includeIfNull: false)
-      EmotionDegree emotionDegree});
+      @JsonKey(includeIfNull: false) EmotionDegree? emotionDegree,
+      @JsonKey(includeIfNull: false) String? qrcode});
 }
 
 /// @nodoc
@@ -606,7 +900,8 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? profileImage = freezed,
     Object? feelState = null,
     Object? feel = null,
-    Object? emotionDegree = null,
+    Object? emotionDegree = freezed,
+    Object? qrcode = freezed,
   }) {
     return _then(_$UserModelImpl(
       email: null == email
@@ -620,7 +915,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
       source: freezed == source
           ? _value.source
           : source // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as String?,
       profileImage: freezed == profileImage
           ? _value.profileImage
           : profileImage // ignore: cast_nullable_to_non_nullable
@@ -633,53 +928,57 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.feel
           : feel // ignore: cast_nullable_to_non_nullable
               as String,
-      emotionDegree: null == emotionDegree
+      emotionDegree: freezed == emotionDegree
           ? _value.emotionDegree
           : emotionDegree // ignore: cast_nullable_to_non_nullable
-              as EmotionDegree,
+              as EmotionDegree?,
+      qrcode: freezed == qrcode
+          ? _value.qrcode
+          : qrcode // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$UserModelImpl implements _UserModel {
   _$UserModelImpl(
       {required this.email,
       required this.name,
       this.source,
-      @JsonKey(name: 'profile_image', includeIfNull: false) this.profileImage,
-      @JsonKey(includeIfNull: false) this.feelState = FeelState.unknown,
+      @JsonKey(includeIfNull: false) this.profileImage,
+      this.feelState = FeelState.UNKNOWN,
       this.feel = '',
-      @JsonKey(name: 'emotion_degree', includeIfNull: false)
-      this.emotionDegree = EmotionDegree.unknown});
-
-  factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$UserModelImplFromJson(json);
+      @JsonKey(includeIfNull: false) this.emotionDegree,
+      @JsonKey(includeIfNull: false) this.qrcode});
 
   @override
   final String email;
   @override
   final String name;
   @override
-  final dynamic source;
-//sns 정보 기반
-  @override
-  @JsonKey(name: 'profile_image', includeIfNull: false)
-  final String? profileImage;
+  final String? source;
+// sns 정보 기반
   @override
   @JsonKey(includeIfNull: false)
+  final String? profileImage;
+  @override
+  @JsonKey()
   final FeelState feelState;
   @override
   @JsonKey()
   final String feel;
   @override
-  @JsonKey(name: 'emotion_degree', includeIfNull: false)
-  final EmotionDegree emotionDegree;
+  @JsonKey(includeIfNull: false)
+  final EmotionDegree? emotionDegree;
+  @override
+  @JsonKey(includeIfNull: false)
+  final String? qrcode;
 
   @override
   String toString() {
-    return 'UserModel(email: $email, name: $name, source: $source, profileImage: $profileImage, feelState: $feelState, feel: $feel, emotionDegree: $emotionDegree)';
+    return 'UserModel(email: $email, name: $name, source: $source, profileImage: $profileImage, feelState: $feelState, feel: $feel, emotionDegree: $emotionDegree, qrcode: $qrcode)';
   }
 
   @override
@@ -689,27 +988,20 @@ class _$UserModelImpl implements _UserModel {
             other is _$UserModelImpl &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.name, name) || other.name == name) &&
-            const DeepCollectionEquality().equals(other.source, source) &&
+            (identical(other.source, source) || other.source == source) &&
             (identical(other.profileImage, profileImage) ||
                 other.profileImage == profileImage) &&
             (identical(other.feelState, feelState) ||
                 other.feelState == feelState) &&
             (identical(other.feel, feel) || other.feel == feel) &&
             (identical(other.emotionDegree, emotionDegree) ||
-                other.emotionDegree == emotionDegree));
+                other.emotionDegree == emotionDegree) &&
+            (identical(other.qrcode, qrcode) || other.qrcode == qrcode));
   }
 
-  @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      email,
-      name,
-      const DeepCollectionEquality().hash(source),
-      profileImage,
-      feelState,
-      feel,
-      emotionDegree);
+  int get hashCode => Object.hash(runtimeType, email, name, source,
+      profileImage, feelState, feel, emotionDegree, qrcode);
 
   @JsonKey(ignore: true)
   @override
@@ -718,10 +1010,9 @@ class _$UserModelImpl implements _UserModel {
       __$$UserModelImplCopyWithImpl<_$UserModelImpl>(this, _$identity);
 
   @override
-  Map<String, dynamic> toJson() {
-    return _$$UserModelImplToJson(
-      this,
-    );
+  Map<String, dynamic> toJsonSig(UserModel userModel) {
+    // TODO: implement toJsonSig
+    throw UnimplementedError();
   }
 }
 
@@ -729,34 +1020,32 @@ abstract class _UserModel implements UserModel {
   factory _UserModel(
       {required final String email,
       required final String name,
-      final dynamic source,
-      @JsonKey(name: 'profile_image', includeIfNull: false)
-      final String? profileImage,
-      @JsonKey(includeIfNull: false) final FeelState feelState,
+      final String? source,
+      @JsonKey(includeIfNull: false) final String? profileImage,
+      final FeelState feelState,
       final String feel,
-      @JsonKey(name: 'emotion_degree', includeIfNull: false)
-      final EmotionDegree emotionDegree}) = _$UserModelImpl;
-
-  factory _UserModel.fromJson(Map<String, dynamic> json) =
-      _$UserModelImpl.fromJson;
+      @JsonKey(includeIfNull: false) final EmotionDegree? emotionDegree,
+      @JsonKey(includeIfNull: false) final String? qrcode}) = _$UserModelImpl;
 
   @override
   String get email;
   @override
   String get name;
   @override
-  dynamic get source;
-  @override //sns 정보 기반
-  @JsonKey(name: 'profile_image', includeIfNull: false)
+  String? get source;
+  @override // sns 정보 기반
+  @JsonKey(includeIfNull: false)
   String? get profileImage;
   @override
-  @JsonKey(includeIfNull: false)
   FeelState get feelState;
   @override
   String get feel;
   @override
-  @JsonKey(name: 'emotion_degree', includeIfNull: false)
-  EmotionDegree get emotionDegree;
+  @JsonKey(includeIfNull: false)
+  EmotionDegree? get emotionDegree;
+  @override
+  @JsonKey(includeIfNull: false)
+  String? get qrcode;
   @override
   @JsonKey(ignore: true)
   _$$UserModelImplCopyWith<_$UserModelImpl> get copyWith =>
