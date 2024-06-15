@@ -41,5 +41,17 @@ class AuthController extends _$AuthController {
       return null;
     }
   }
+  void setProfile({required UserModel user, UserModel? updatedUser}) {
+    state = Authenticated(user: user, updatedUser: updatedUser);
+  }
+
+  Future<void> updateProfile({required UserModel user}) async {
+    try {
+      await ref.watch(authRepositoryProvider).updateUser(user: user);
+      setProfile(user: user, updatedUser: user);
+    } catch (error, stackTrace) {
+      ref.read(errorControllerProvider.notifier).onError(error, stackTrace);
+    }
+  }
 
 }

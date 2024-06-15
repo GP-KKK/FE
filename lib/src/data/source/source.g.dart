@@ -6,6 +6,21 @@ part of 'source.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$newsRepositoryHash() => r'990730520dda941c33c6bc6cf6f276f0b2779a0f';
+
+/// See also [newsRepository].
+@ProviderFor(newsRepository)
+final newsRepositoryProvider = AutoDisposeProvider<NewsRepository>.internal(
+  newsRepository,
+  name: r'newsRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$newsRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef NewsRepositoryRef = AutoDisposeProviderRef<NewsRepository>;
 String _$authRepositoryHash() => r'28f80f4b61358c9522f32ad2934ea02e52252efe';
 
 /// See also [authRepository].

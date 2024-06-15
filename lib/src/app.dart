@@ -32,7 +32,7 @@ class App extends HookConsumerWidget{
         '/': (context) => const LoginScreen(),
         //'/auth': (context) => Auth(),
         '/home_screen': (context) => const HomeScreen(),
-        '/news_list': (context) => NewsList(),
+        '/news_list': (context) => NewsScreen(),
         '/news_article': (context) => const NewsArticle(),
         '/edit': (context) => EditScreen(),
         '/map':(context)=>MapScreen(),

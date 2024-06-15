@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-import 'package:permission_handler/permission_handler.dart';
 // import 'package:guardiann_flutter/src/shared/provider.dart';
 
 Future<void> main() async {
@@ -15,6 +14,7 @@ Future<void> main() async {
 
 void runApplication() {
   final ftoast = FToast();
+  KakaoSdk.init(nativeAppKey: '5023f50da56c724b08f5d91b6ee9ba61');
   runApp(
     const ProviderScope(
       child: App(),
@@ -24,13 +24,6 @@ void runApplication() {
 
 Future<void> initializeApp() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // kakao login
-  KakaoSdk.init(nativeAppKey: '5023f50da56c724b08f5d91b6ee9ba61');
-
-  // location permission
-  await _checkLocationPermission();
-
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -44,11 +37,4 @@ Future<void> initializeApp() async {
       statusBarColor: Colors.transparent,
     ),
   );
-}
-
-Future<void> _checkLocationPermission() async {
-  var status = await Permission.location.status;
-  if (status.isDenied) {
-    await Permission.location.request();
-  }
 }

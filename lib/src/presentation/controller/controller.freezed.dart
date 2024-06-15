@@ -931,3 +931,127 @@ abstract class ErrorNotify implements ErrorState {
   _$$ErrorNotifyImplCopyWith<_$ErrorNotifyImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+mixin _$NewsState {
+  List<NewsModel> get newsList => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $NewsStateCopyWith<NewsState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $NewsStateCopyWith<$Res> {
+  factory $NewsStateCopyWith(NewsState value, $Res Function(NewsState) then) =
+      _$NewsStateCopyWithImpl<$Res, NewsState>;
+  @useResult
+  $Res call({List<NewsModel> newsList});
+}
+
+/// @nodoc
+class _$NewsStateCopyWithImpl<$Res, $Val extends NewsState>
+    implements $NewsStateCopyWith<$Res> {
+  _$NewsStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? newsList = null,
+  }) {
+    return _then(_value.copyWith(
+      newsList: null == newsList
+          ? _value.newsList
+          : newsList // ignore: cast_nullable_to_non_nullable
+              as List<NewsModel>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$NewsStateImplCopyWith<$Res>
+    implements $NewsStateCopyWith<$Res> {
+  factory _$$NewsStateImplCopyWith(
+          _$NewsStateImpl value, $Res Function(_$NewsStateImpl) then) =
+      __$$NewsStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({List<NewsModel> newsList});
+}
+
+/// @nodoc
+class __$$NewsStateImplCopyWithImpl<$Res>
+    extends _$NewsStateCopyWithImpl<$Res, _$NewsStateImpl>
+    implements _$$NewsStateImplCopyWith<$Res> {
+  __$$NewsStateImplCopyWithImpl(
+      _$NewsStateImpl _value, $Res Function(_$NewsStateImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? newsList = null,
+  }) {
+    return _then(_$NewsStateImpl(
+      newsList: null == newsList
+          ? _value._newsList
+          : newsList // ignore: cast_nullable_to_non_nullable
+              as List<NewsModel>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$NewsStateImpl implements _NewsState {
+  _$NewsStateImpl({final List<NewsModel> newsList = const []})
+      : _newsList = newsList;
+
+  final List<NewsModel> _newsList;
+  @override
+  @JsonKey()
+  List<NewsModel> get newsList {
+    if (_newsList is EqualUnmodifiableListView) return _newsList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_newsList);
+  }
+
+  @override
+  String toString() {
+    return 'NewsState(newsList: $newsList)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$NewsStateImpl &&
+            const DeepCollectionEquality().equals(other._newsList, _newsList));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_newsList));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$NewsStateImplCopyWith<_$NewsStateImpl> get copyWith =>
+      __$$NewsStateImplCopyWithImpl<_$NewsStateImpl>(this, _$identity);
+}
+
+abstract class _NewsState implements NewsState {
+  factory _NewsState({final List<NewsModel> newsList}) = _$NewsStateImpl;
+
+  @override
+  List<NewsModel> get newsList;
+  @override
+  @JsonKey(ignore: true)
+  _$$NewsStateImplCopyWith<_$NewsStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
