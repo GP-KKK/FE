@@ -183,9 +183,9 @@ class _ChatListState extends State<ChatListScreen> {
               // 김성민
               // 1234235는 한 current user와 대화할 새로운 사람의 uid
               // 임시로 chat_list_screen의 floatingButton에 새로운 대화 시작 기능을 구현해놓음
-              ..userIds = [SendbirdChat.currentUser!.userId, '1234235']
+              ..userIds = [SendbirdChat.currentUser!.userId, '0123kkm']
               ..isDistinct = true
-              ..name = 'chat with 1234235'; // 채팅방 이름
+              ..name = 'chat with ???'; // 채팅방 이름
 
             final channel = await GroupChannel.createChannel(channel_params);
             await Navigator.of(context).push(MaterialPageRoute(

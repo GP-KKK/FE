@@ -85,7 +85,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void checkOnTap() {
     setState(() {
       // 수정
-      // admin message로 전환
+      // admin message로 전환하려고 했는데 클라이언트 앱에서는 어드민 메시지 보낼 권한이 없음.
       //globalMessage.value.add("상대방이 문제해결 여부를 체크할 때까지 대기중입니다...(1/2)");
       //globalMessage.value.add("문제가 해결되었습니다...(2/2)\n매너 온도 평가 화면으로 이동합니다.");
       _toggleMannerTemperature();
@@ -247,7 +247,8 @@ class _ChatScreenState extends State<ChatScreen> {
                           child: Column(
                             children: [
                               Align(
-                                alignment: value[index].isOperatorMessage
+                                alignment: (value[index].sender?.userId !=
+                                        SendbirdChat.currentUser?.userId)
                                     ? Alignment.centerLeft
                                     : Alignment.centerRight,
                                 // alignment: Alignment.centerRight,
