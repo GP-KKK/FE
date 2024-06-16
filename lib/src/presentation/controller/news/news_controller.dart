@@ -8,13 +8,18 @@ class NewsController extends _$NewsController {
   }
 
   Future<NewsState> _fetchNewsList() async {
-    final response = await ref
-        .watch(newsRepositoryProvider)
-        .getNewsList()
-        .onError(ref.read(errorControllerProvider.notifier).onError);
+    print('fetch news list');
+    final Dio dio = Dio();
+    final response = await dio.get(
+      'http://34.47.108.136:8080/crawling',
+    );
+    List<dynamic> data = response.data as List<dynamic>;
 
+    List<NewsModel> newsList = data.map((json) => NewsModel.fromJson(json as Map<String, dynamic>)).toList();
+    print(newsList);
+    print("here?");
     if (response != null) {
-      return NewsState(newsList: response.data);
+      return NewsState(newsList: newsList);
     }
     return NewsState();
   }
