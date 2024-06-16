@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:fe/src/data/model/model.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sendbird_chat_sdk/sendbird_chat_sdk.dart';
 
 import 'widget/menu_button_screen.dart';
 
@@ -31,6 +33,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
+    final account = ref.watch(authControllerProvider);
+    account is Authenticated ? account.user : null;
+    // USER_ID below should be unique to your Sendbird application.
     // TODO: implement build
     return _buildHomeScreen();
   }
@@ -38,7 +43,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   Widget _buildHomeScreen() {
     final account = ref.watch(authControllerProvider);
     account is Authenticated ? account.user : null;
-
+    account is Authenticated ? buildForChat(account.user) : null;
     return Container(
       decoration: const BoxDecoration(gradient: ColorTheme.primaryGradient),
       child: Scaffold(
@@ -139,7 +144,28 @@ FlexibleSpaceBar get flexibleSpace {
     ),
   );
 }
+void buildForChat(UserModel user){
+  String username = user.email.split('@')[0];
+  print("username : $username");
+  runZonedGuarded(() async {
+    // user는 어플 사용자의 id, 김성민
+    final user = await SendbirdChat.connect(username); // user id 내 아이디. '0123kkm'
+    if (user.nickname == '') {
+      print('새로 생성한 계정의 경우 약간의 딜레이로 인해서 닉네임이 안바뀐 상태로 출력됨');
+      SendbirdChat.updateCurrentUserInfo(nickname: 'testUser'); // user nickname
+    }
+    // The user is connected to the Sendbird server.
+    print(
+        'SendBird Message | Main.dart | InitializeApp() : Success to Connect');
+    print('--> User Id : ${user.userId}');
+    print('--> User Nickname : ${user.nickname}');
+  }, (e, s) {
+    // Handle error.
+    print('Error Message | main.dart | initializeApp() : $e');
+    print('Error Message | main.dart | initializeApp() : $s');
+  });
 
+}
 
 PreferredSizeWidget bottom(UserModel user, BuildContext context) {
   return PreferredSize(

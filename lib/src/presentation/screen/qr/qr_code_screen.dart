@@ -1,12 +1,14 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:fe/src/presentation/screen/chat/create_channel_screen.dart';
 import 'package:fe/src/shared/theme/color_theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import 'package:fe/src/shared/theme/text_theme.dart';
+import 'package:sendbird_chat_sdk/sendbird_chat_sdk.dart';
 
 class QrCodeScreen extends StatefulWidget {
   @override
@@ -39,19 +41,6 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
               child: QRViewExample(),
             ),
           ),
-          // Expanded(
-          //   flex: 1,
-          //   child: Center(
-          //     child: ElevatedButton(
-          //       onPressed: () {
-          //         setState(() {
-          //           Navigator.of(context).pushNamed('/loading');
-          //         });
-          //       },
-          //       child: Text('Take Photo'),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );
@@ -69,9 +58,8 @@ class _QRViewExampleState extends State<QRViewExample> {
   Barcode? result;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  bool isScanning = false;
 
-  // In order to get hot reload to work we need to pause the camera if the platform
-  // is android, or resume the camera if the platform is iOS.
   @override
   void reassemble() {
     super.reassemble();
@@ -95,8 +83,7 @@ class _QRViewExampleState extends State<QRViewExample> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   if (result != null)
-                    Text(
-                        'Data: ${result!.code}')
+                    Text('Data: ${result!.code}')
                   else
                     const Text('Scan a code'),
                   Row(
@@ -109,11 +96,9 @@ class _QRViewExampleState extends State<QRViewExample> {
                             style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 32.0, vertical: 16.0),
-                              // 버튼의 내부 패딩 설정
                               textStyle: TextStyle(fontSize: 20),
                               shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(15), // 버튼의 모서리 둥글기 조정
+                                borderRadius: BorderRadius.circular(15),
                               ),
                             ),
                             onPressed: () async {
@@ -139,11 +124,9 @@ class _QRViewExampleState extends State<QRViewExample> {
                             style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 32.0, vertical: 16.0),
-                              // 버튼의 내부 패딩 설정
                               textStyle: TextStyle(fontSize: 20),
                               shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(15), // 버튼의 모서리 둥글기 조정
+                                borderRadius: BorderRadius.circular(15),
                               ),
                             ),
                             onPressed: () async {
@@ -178,14 +161,29 @@ class _QRViewExampleState extends State<QRViewExample> {
     );
   }
 
+  void goToChat(String email) async {
+    String username = email.split('@')[0];
+
+    try {
+      final channel_params = GroupChannelCreateParams()
+        ..userIds = [SendbirdChat.currentUser!.userId, username]
+        ..isDistinct = true
+        ..name = '$username와의 대화';
+
+      final channel = await GroupChannel.createChannel(channel_params);
+      await Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => ChatScreen(groupChannel: channel)));
+    } catch (e) {
+      print('Error messages | chat_list_screen.dart | FloatingActionButton | channel : $e');
+    }
+  }
+
   Widget _buildQrView(BuildContext context) {
-    // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
     var scanArea = (MediaQuery.of(context).size.width < 400 ||
-            MediaQuery.of(context).size.height < 400)
+        MediaQuery.of(context).size.height < 400)
         ? 150.0
         : 300.0;
-    // To ensure the Scanner view is properly sizes after rotation
-    // we need to listen for Flutter SizeChanged notification and update controller
+
     return QRView(
       key: qrKey,
       onQRViewCreated: _onQRViewCreated,
@@ -204,13 +202,21 @@ class _QRViewExampleState extends State<QRViewExample> {
       this.controller = controller;
     });
     controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        result = scanData;
-      });
-      //
-      print("---------");
-      print (scanData);
-      print(result!.code);
+      if (!isScanning) {
+        setState(() {
+          isScanning = true;
+          result = scanData;
+        });
+
+        if (result != null && result!.code != null) {
+          String input = result!.code!;
+
+          String email = input.split(':')[1].trim();
+          String username = email.split('@')[0];
+          print(username);
+          goToChat(username);
+        }
+      }
     });
   }
 

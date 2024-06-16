@@ -47,6 +47,8 @@ class _ChatListState extends State<ChatListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    makeChannelList();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -176,16 +178,16 @@ class _ChatListState extends State<ChatListScreen> {
               );
             }),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(//여기있는 걸 QR 찍었었을때 바로 되게해서 바로 채팅창으로 넘어가게끔
         onPressed: () async {
           try {
             final channel_params = GroupChannelCreateParams()
               // 김성민
               // 1234235는 한 current user와 대화할 새로운 사람의 uid
               // 임시로 chat_list_screen의 floatingButton에 새로운 대화 시작 기능을 구현해놓음
-              ..userIds = [SendbirdChat.currentUser!.userId, '0123kkm']
+              ..userIds = [SendbirdChat.currentUser!.userId, '이거 뭐로 할래?']//여기다가 상대방 아이디 587503
               ..isDistinct = true
-              ..name = 'chat with ???'; // 채팅방 이름
+              ..name = 'chat with ???'; // 채팅방 이름 623747 '김성민'
 
             final channel = await GroupChannel.createChannel(channel_params);
             await Navigator.of(context).push(MaterialPageRoute(

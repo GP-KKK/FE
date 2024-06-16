@@ -38,27 +38,6 @@ Future<void> initializeApp() async {
     options: SendbirdChatOptions(useCollectionCaching: true),
   );
 
-// USER_ID below should be unique to your Sendbird application.
-  runZonedGuarded(() async {
-    // user는 어플 사용자의 id, 김성민
-    final user = await SendbirdChat.connect('rlarudals55449966'); // user id
-    print(user.userId);
-    if (user.nickname == '') {
-      print('새로 생성한 계정의 경우 약간의 딜레이로 인해서 닉네임이 안바뀐 상태로 출력됨');
-      SendbirdChat.updateCurrentUserInfo(nickname: 'testUser'); // user nickname
-    }
-    // The user is connected to the Sendbird server.
-    print(
-        'SendBird Message | Main.dart | InitializeApp() : Success to Connect');
-    print('--> User Id : ${user.userId}');
-    print('--> User Nickname : ${user.nickname}');
-  }, (e, s) {
-    // Handle error.
-    print('Error Message | main.dart | initializeApp() : $e');
-    print('Error Message | main.dart | initializeApp() : $s');
-  });
-
-
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

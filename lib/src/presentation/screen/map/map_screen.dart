@@ -101,6 +101,7 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('init build');
     return Scaffold(
       appBar: AppBar(
         title: const Text('현재 위치 지도'),
@@ -109,10 +110,13 @@ class _MapScreenState extends State<MapScreen> {
         future: _futurePosition,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
+            print('check1');
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
+            print('check2');
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (snapshot.hasData) {
+            print('check3');
             return Stack(
               children: [
                 GoogleMap(
@@ -148,7 +152,7 @@ class _MapScreenState extends State<MapScreen> {
                     padding: EdgeInsets.all(10),
                     child: Text(
                       '평균 온도: $_averageTemperature°C',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
@@ -163,5 +167,6 @@ class _MapScreenState extends State<MapScreen> {
         },
       ),
     );
+
   }
 }
