@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:fe/src/data/model/model.dart';
 import 'package:fe/src/presentation/common/scale_custom_button.dart';
 import 'package:fe/src/presentation/common/user_profile_icon.dart';
+import 'package:fe/src/presentation/screen/chat/create_channel_screen.dart';
 import 'package:fe/src/shared/theme/color_theme.dart';
 import 'package:fe/src/shared/theme/text_theme.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sendbird_chat_sdk/sendbird_chat_sdk.dart';
 
 import 'widget/menu_button_screen.dart';
 
@@ -31,6 +33,18 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen>
     with SingleTickerProviderStateMixin {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return _buildHomeScreen();
@@ -42,7 +56,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
       child: Scaffold(
         body: Container(
           decoration: const BoxDecoration(gradient: ColorTheme.primaryGradient),
-
           child: CustomScrollView(
             slivers: <Widget>[
               SliverAppBar(
@@ -72,7 +85,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                         setState(() {
                           Navigator.of(context).pushNamed('/news_list');
                         });
-                      }, imagePath: 'report',
+                      },
+                      imagePath: 'report',
                     ),
                     MenuButton(
                       title: '지도',
@@ -81,7 +95,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                         setState(() {
                           Navigator.of(context).pushNamed('/map');
                         });
-                      }, imagePath: 'map_marker',
+                      },
+                      imagePath: 'map_marker',
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -95,7 +110,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                               });
 
                               // QR 찍기 페이지로 이동
-                            }, imagePath: 'qr',
+                            },
+                            imagePath: 'qr',
                           ),
                         ),
                         Expanded(
@@ -107,7 +123,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                               });
 
                               // QR 찍기 페이지로 이동
-                            }, imagePath: 'talk',
+                            },
+                            imagePath: 'talk',
                           ),
                         )
                       ],
@@ -138,7 +155,6 @@ FlexibleSpaceBar get flexibleSpace {
   );
 }
 
-
 PreferredSizeWidget bottom(UserModel user, BuildContext context) {
   return PreferredSize(
     preferredSize: const Size.fromHeight(72.0),
@@ -154,7 +170,6 @@ PreferredSizeWidget bottom(UserModel user, BuildContext context) {
               ),
             ),
       child: Row(
-
         children: [
           if (user != null)
             Expanded(
@@ -265,5 +280,3 @@ class _ProfileButton extends StatelessWidget {
     );
   }
 }
-
-

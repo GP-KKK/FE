@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fe/src/app.dart';
 import 'package:flutter/material.dart';
 
@@ -6,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:sendbird_chat_sdk/sendbird_chat_sdk.dart';
 // import 'package:guardiann_flutter/src/shared/provider.dart';
 
 Future<void> main() async {
@@ -31,6 +34,26 @@ Future<void> initializeApp() async {
   // location permission
   await _checkLocationPermission();
 
+  // sendBird chat api
+  await SendbirdChat.init(
+    appId: 'BC23D9CA-D861-4819-9C1B-FF94FBC9E234',
+    options: SendbirdChatOptions(useCollectionCaching: true),
+  );
+
+// USER_ID below should be unique to your Sendbird application.
+  runZonedGuarded(() async {
+    // user는 어플 사용자의 id, 김성민
+    final user = await SendbirdChat.connect('rlarudals55449966'); // user id
+    // The user is connected to the Sendbird server.
+    print(
+        'SendBird Message | Main.dart | InitializeApp() : Success to Connect');
+    print('--> User Id : ${user.userId}');
+    print('--> User Nickname : ${user.nickname}');
+  }, (e, s) {
+    // Handle error.
+    print('Error Message | main.dart | initializeApp() : $e');
+    print('Error Message | main.dart | initializeApp() : $s');
+  });
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

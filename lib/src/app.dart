@@ -1,5 +1,5 @@
 import 'package:fe/src/presentation/screen/chat/chat_list_screen.dart';
-import 'package:fe/src/presentation/screen/chat/chat_screen.dart';
+import 'package:fe/src/presentation/screen/chat/create_channel_screen.dart';
 import 'package:fe/src/presentation/screen/edit/edit_screen.dart';
 import 'package:fe/src/presentation/screen/login/login_screen.dart';
 import 'package:fe/src/presentation/screen/map/map_screen.dart';
@@ -16,17 +16,16 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'presentation/screen/home/home_screen.dart';
 
-class App extends HookConsumerWidget{
+class App extends HookConsumerWidget {
   const App({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     // TODO: implement build
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false,
 
-        theme: mainThemeByLocale(const Locale('ko')),
+      theme: mainThemeByLocale(const Locale('ko')),
       initialRoute: '/',
       routes: {
         '/': (context) => const LoginScreen(),
@@ -35,16 +34,13 @@ class App extends HookConsumerWidget{
         '/news_list': (context) => NewsList(),
         '/news_article': (context) => const NewsArticle(),
         '/edit': (context) => EditScreen(),
-        '/map':(context)=>MapScreen(),
+        '/map': (context) => MapScreen(),
         '/setting': (context) => SettingScreen(),
         '/qr_code': (context) => QrCodeScreen(), // qr code 찍는 화면
         '/chat_list': (context) => ChatListScreen(),
-        '/chat': (context) => ChatScreen(),
         '/loading': (context) => LoadingScreen(),
-
       },
       //home: LoginScreen(),
     );
   }
-  
 }

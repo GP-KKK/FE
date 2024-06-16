@@ -1,5 +1,8 @@
+import 'package:fe/src/presentation/screen/chat/create_channel_screen.dart';
 import 'package:fe/src/shared/theme/text_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:sendbird_chat_sdk/sendbird_chat_sdk.dart';
 
 import '../../../shared/theme/color_theme.dart';
 
@@ -9,147 +12,194 @@ class ChatListScreen extends StatefulWidget {
 }
 
 class _ChatListState extends State<ChatListScreen> {
+  late List<GroupChannel> _channels = [];
+  final ScrollController _scrollController = ScrollController();
+
+  // make channel list
+  Future<void> makeChannelList() async {
+    // Retrieve all users.
+    final query = GroupChannelListQuery()
+      ..userIdsIncludeFilter = [SendbirdChat.currentUser!.userId];
+
+    try {
+      _channels = await query.next();
+      setState(() {});
+    } catch (e) {
+      // Handle error.
+      print('Error messages | chat_list_screen.dart | MyInit() : $e');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    SendbirdChat.addChannelHandler(
+        'group chatting message handler', MessageGroupChannelHandler());
+    makeChannelList();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    SendbirdChat.removeChannelHandler('group chatting message handler');
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            '채팅 목록',
-            style: textTheme.titleSmall!.copyWith(
-              color: ColorTheme.slateColor,
-            ),
+      appBar: AppBar(
+        title: Text(
+          '채팅 목록',
+          style: textTheme.titleSmall!.copyWith(
+            color: ColorTheme.slateColor,
           ),
-          centerTitle: true,
-          foregroundColor: Colors.blueGrey,
-          backgroundColor: Colors.white,
         ),
-        body: Container(
-          decoration: const BoxDecoration(gradient: ColorTheme.primaryGradient),
-          child: ListView.builder(
-            itemCount: 6,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      Navigator.of(context).pushNamed('/chat');
-                    });
-                  },
-                  child: Stack(
-                    children: [
-                      Container(
-                        constraints: const BoxConstraints(minHeight: 94),
-                        padding: const EdgeInsets.only(
-                          top: 20,
-                          left: 10,
-                          right: 14,
-                          bottom: 20,
-                        ),
-                        decoration: ShapeDecoration(
-                          color: Colors.white.withOpacity(0.7),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          // shadows: [
-                          //   if (currentQuest.currentScreen != null)
-                          //     const BoxShadow(
-                          //       color: ColorTheme.shadow,
-                          //       blurRadius: 2,
-                          //       offset: Offset(0, 1),
-                          //     )
-                          // ],
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(right: 10),
-                              width: 52,
-                              height: 52,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage('assets/images/talk.png'),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '사용자 ${index}.',
-                                      maxLines: 3,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: textTheme.bodyLarge!.copyWith(
-                                        color: ColorTheme.slateColor,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    // if (currentQuest.currentScreen == null)
-                                    Text(
-                                      '대화 내용',
-                                      style: textTheme.labelSmall!.copyWith(
-                                        color: ColorTheme.primaryColor,
-                                      ),
-                                    ),
-                                    // if (currentQuest.currentScreen != null)
-                                    // // currentScreen이 null이 아닐 경우
-                                    //   _buildQuestProgressBarOrTimer(quests, currentQuest),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
-        )
+        centerTitle: true,
+        foregroundColor: Colors.blueGrey,
+        backgroundColor: Colors.white,
+      ),
+      body: Container(
+        decoration: const BoxDecoration(gradient: ColorTheme.primaryGradient),
+        child: ValueListenableBuilder(
+            valueListenable: globalMessage,
+            builder:
+                (BuildContext context, List<BaseMessage> value, Widget? child) {
+              return ListView.builder(
+                controller: _scrollController,
+                itemCount: _channels.length,
+                itemBuilder: (context, index) {
+                  GroupChannel channel = _channels[index];
 
-        // Container(
-        //   decoration: const BoxDecoration(gradient: ColorTheme.primaryGradient),
-        //
-        //   child: ListView.builder(
-        //     itemCount: 20,
-        //     itemBuilder: (context, index) {
-        //       return Container(
-        //
-        //         width: double.infinity, // 너비를 화면의 최대 크기로 설정
-        //         height: 80.0, // 높이를 80으로 설정
-        //         margin: EdgeInsets.symmetric(
-        //             vertical: 4.0, horizontal: 8.0), // 항목 사이에 약간의 간격을 추가
-        //         decoration: BoxDecoration(
-        //           borderRadius: BorderRadius.circular(8.0), // 모서리 둥글게 설정
-        //           border: Border.all(color: Colors.black, width: 1.0), // 윤곽선 설정
-        //         ),
-        //         child: Center(
-        //           child: GestureDetector(
-        //             onTap: () {
-        //               setState(() {
-        //                 Navigator.of(context).pushNamed('/chat');
-        //               });
-        //             },
-        //             child: Text(
-        //               'Chat ${(index + 1)}', // 아이템 번호 표시
-        //               style: TextStyle(
-        //                 color: Colors.black,
-        //                 fontSize: 18.0,
-        //               ),
-        //             ),
-        //           ),
-        //         ),
-        //       );
-        //     },
-        //   ),
-        // ),
-        );
+                  return Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: GestureDetector(
+                      onTap: () async {
+                        await Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                ChatScreen(groupChannel: channel)));
+                        makeChannelList();
+                      },
+                      child: Stack(
+                        children: [
+                          Container(
+                            constraints: const BoxConstraints(minHeight: 94),
+                            padding: const EdgeInsets.only(
+                              top: 20,
+                              left: 10,
+                              right: 14,
+                              bottom: 20,
+                            ),
+                            decoration: ShapeDecoration(
+                              color: Colors.white.withOpacity(0.7),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              // shadows: [
+                              //   if (currentQuest.currentScreen != null)
+                              //     const BoxShadow(
+                              //       color: ColorTheme.shadow,
+                              //       blurRadius: 2,
+                              //       offset: Offset(0, 1),
+                              //     )
+                              // ],
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(right: 10),
+                                  width: 52,
+                                  height: 52,
+                                  decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                      image:
+                                          AssetImage('assets/images/talk.png'),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          channel.name,
+                                          maxLines: 3,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: textTheme.bodyLarge!.copyWith(
+                                            color: ColorTheme.slateColor,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 10),
+                                        // if (currentQuest.currentScreen == null)
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              channel.lastMessage?.message ??
+                                                  '아직 대화가 없습니다',
+                                              style: textTheme.labelSmall!
+                                                  .copyWith(
+                                                color: ColorTheme.primaryColor,
+                                              ),
+                                            ),
+                                            (channel.lastMessage != null)
+                                                ? Text(
+                                                    '${DateFormat('yyyy-MM-dd    kk:mm').format(DateTime.fromMillisecondsSinceEpoch(_channels[index].lastMessage!.createdAt))}',
+                                                    style: textTheme.labelSmall!
+                                                        .copyWith(
+                                                      color: ColorTheme
+                                                          .primaryColor,
+                                                    ),
+                                                  )
+                                                : Text(''),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+            }),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          try {
+            final channel_params = GroupChannelCreateParams()
+              // 김성민
+              // 1234235는 한 current user와 대화할 새로운 사람의 uid
+              // 임시로 chat_list_screen의 floatingButton에 새로운 대화 시작 기능을 구현해놓음
+              ..userIds = [SendbirdChat.currentUser!.userId, '1234235']
+              ..isDistinct = true
+              ..name = 'chat with 1234235'; // 채팅방 이름
+
+            final channel = await GroupChannel.createChannel(channel_params);
+            await Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => ChatScreen(groupChannel: channel)));
+            makeChannelList();
+          } catch (e) {
+            // Handle error.
+            print(
+                'Error messages | chat_list_screen.dart | FloatingActionButton | channel : $e');
+          }
+          setState(() {});
+        },
+        child: Icon(Icons.add),
+      ),
+    );
   }
 }
