@@ -26,7 +26,6 @@ class LoginScreen extends ConsumerWidget {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => HomeScreen()),
           );
-
           //Navigator.of(context).pushNamed('/home_screen');
       }
     });
